@@ -4,6 +4,7 @@
 <head>
   <title>Todo List</title>
   <link rel="stylesheet" href="css/style.css">
+  <script src="js/view.js" type="text/javascript">
   </script>
 </head>
 
@@ -11,7 +12,7 @@
   <center>
     <h2><a href="homePage.html"> << </a>Add Todo List</h2>
     <hr>
-    <button id="addItem" type="button" name="button" onclick="addItemToList()">Add Todo Item</button><br><br>
+    <button id="addItem" type="button" name="button" onclick="addInput()">Add Todo Item</button><br><br>
     <form id="addList" action="homePage" method="POST">
       Title : <input id="titile" type="text" name="title"><br><br> Description : <input id="description" type="text" name="description"><br><br>
       <input type="submit" name="" value="Submit">
