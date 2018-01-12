@@ -41,4 +41,22 @@ describe('app',()=>{
       })
     })
   })
+  describe('POST /login',()=>{
+    it('redirects to homePage for valid user',done=>{
+      request(app,{method:'POST',url:'/login',body:'name=viraj'},res=>{
+        th.should_be_redirected_to(res,'/homePage.html');
+        th.should_not_have_cookie(res,'message');
+        done();
+      })
+    })
+  })
+  describe('GET /logout',()=>{
+    it('redirects to guestBook for valid user',done=>{
+      request(app,{method:'GET',url:'/logout'},res=>{
+        th.should_be_redirected_to(res,'/index.html');
+        th.should_not_have_cookie(res,'message');
+        done();
+      })
+    })
+  })
 })
