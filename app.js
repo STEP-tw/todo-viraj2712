@@ -74,14 +74,18 @@ const checkIfRegisteredUser = (req, res) => {
 }
 
 const redirectToIndex = (req, res) => {
+  if(!req.user) {
+    res.redirect('/index.html');
+    return;
+  }
   res.setHeader('Set-Cookie', [`loginFailed=false; Expires=Thu, 01 Jan 1970 00:00:01 GMT;`, `sessionid=0 ; Expires=Thu, 01 Jan 1970 00:00:01 GMT;`]);
+  res.redirect('/index.html')
   delete req.user.sessionid;
-  res.redirect('/index.html');
 }
 
 const redirectToAddList = (req, res) => {
   if(req.user) res.redirect('/addList.html');
-  else res.redirect('index.html');
+  else res.redirect('/index.html');
 }
 
 const redirectToHome = (req, res) => {

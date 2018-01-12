@@ -62,7 +62,7 @@ describe('app',()=>{
   describe('GET /addList',()=>{
     it('redirects to add todo list page',done=>{
       request(app,{method:'GET',url:'/addList'},res=>{
-        th.should_be_redirected_to(res,'/addList.html');
+        th.should_be_redirected_to(res,'/index.html');
         done();
       })
     })
@@ -71,6 +71,15 @@ describe('app',()=>{
     it('serves add todo list page',done=>{
       request(app,{method:'GET',url:'/addList.html'},res=>{
         th.body_contains(res,'Title :');
+        done();
+      })
+    })
+  })
+  describe('GET /logout',()=>{
+    it('redirects to home page',done=>{
+      request(app,{method:'GET',url:'/logout'},res=>{
+        th.should_be_redirected_to(res,'/index.html');
+        // th.body_contains(res,'Title :');
         done();
       })
     })
