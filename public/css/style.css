@@ -38,6 +38,11 @@ h2 {
   text-align: right;
 }
 
-.addList {
+#addList {
   font-size: 20px;
+}
+
+#todoLists {
+  font-size: 20px;
+  margin-left: 130px;
 }

@@ -1,5 +1,6 @@
 let fs = require('fs');
 const WebApp = require('./webapp');
+const storeData = require('./public/js/model.js').storeData;
 
 let registered_users = [{
   userName: 'viraj',
@@ -81,7 +82,12 @@ const redirectToAddList = (req, res) => {
 }
 
 const redirectToHome = (req, res) => {
-  res.redirect('homePage.html');
+  storeData(req);
+  res.redirect('/homePage.html');
+}
+
+const redirectToViewList = (req,res) => {
+  res.redirect('/viewLists.html');
 }
 
 let app = WebApp.create();
@@ -93,5 +99,6 @@ app.post('/login', checkIfRegisteredUser);
 app.get('/logout', redirectToIndex);
 app.get('/addList', redirectToAddList);
 app.post('/homePage', redirectToHome);
+app.get('/viewLists',redirectToViewList);
 
 module.exports = app;
