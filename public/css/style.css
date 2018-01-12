@@ -46,3 +46,9 @@ h2 {
   font-size: 20px;
   margin-left: 130px;
 }
+
+#logoutOption {
+  text-align: right;
+  margin-right: 130px;
+  font-size: 20px;
+}
