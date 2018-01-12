@@ -60,7 +60,7 @@ describe('app',()=>{
     })
   })
   describe('GET /addList',()=>{
-    it('redirects to add todo list page',done=>{
+    it('redirects to home page',done=>{
       request(app,{method:'GET',url:'/addList'},res=>{
         th.should_be_redirected_to(res,'/index.html');
         done();
@@ -79,7 +79,22 @@ describe('app',()=>{
     it('redirects to home page',done=>{
       request(app,{method:'GET',url:'/logout'},res=>{
         th.should_be_redirected_to(res,'/index.html');
-        // th.body_contains(res,'Title :');
+        done();
+      })
+    })
+  })
+  describe('GET /viewLists',()=>{
+    it('redirects to page of todo lists',done=>{
+      request(app,{method:'GET',url:'/viewLists'},res=>{
+        th.should_be_redirected_to(res,'/viewLists.html');
+        done();
+      })
+    })
+  })
+  describe('GET /viewLists.html',()=>{
+    it('redirects to page of todo lists',done=>{
+      request(app,{method:'GET',url:'/viewLists.html'},res=>{
+        th.body_contains(res,'Your Todo Lists');
         done();
       })
     })
