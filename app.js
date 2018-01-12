@@ -15,7 +15,6 @@ let logRequest = (req, res) => {
   console.log(text);
 }
 
-
 let loadUser = (req, res) => {
   let sessionid = req.cookies.sessionid;
   let user = registered_users.find(u => u.sessionid == sessionid);
@@ -75,6 +74,8 @@ const checkIfRegisteredUser = (req, res) => {
 }
 
 const redirectToIndex = (req, res) => {
+  res.setHeader('Set-Cookie', [`loginFailed=false; Expires=Thu, 01 Jan 1970 00:00:01 GMT;`, `sessionid=0 ; Expires=Thu, 01 Jan 1970 00:00:01 GMT;`]);
+  delete req.user.sessionid;
   res.redirect('/index.html');
 }
 
