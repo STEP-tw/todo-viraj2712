@@ -60,9 +60,17 @@ describe('app',()=>{
     })
   })
   describe('GET /addList',()=>{
-    it('serves add todo list page',done=>{
+    it('redirects to add todo list page',done=>{
       request(app,{method:'GET',url:'/addList'},res=>{
         th.should_be_redirected_to(res,'/addList.html');
+        done();
+      })
+    })
+  })
+  describe('GET /addList.html',()=>{
+    it('serves add todo list page',done=>{
+      request(app,{method:'GET',url:'/addList.html'},res=>{
+        th.body_contains(res,'Title :');
         done();
       })
     })
