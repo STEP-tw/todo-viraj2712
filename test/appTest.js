@@ -51,10 +51,18 @@ describe('app',()=>{
     })
   })
   describe('GET /logout',()=>{
-    it('redirects to guestBook for valid user',done=>{
+    it('redirects to home page',done=>{
       request(app,{method:'GET',url:'/logout'},res=>{
         th.should_be_redirected_to(res,'/index.html');
         th.should_not_have_cookie(res,'message');
+        done();
+      })
+    })
+  })
+  describe('GET /addList',()=>{
+    it('serves add todo list page',done=>{
+      request(app,{method:'GET',url:'/addList'},res=>{
+        th.should_be_redirected_to(res,'/addList.html');
         done();
       })
     })

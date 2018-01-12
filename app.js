@@ -73,8 +73,16 @@ const checkIfRegisteredUser = (req, res) => {
   res.redirect('/homePage.html');
 }
 
-const redirectToHome = (req,res) => {
+const redirectToIndex = (req,res) => {
   res.redirect('/index.html');
+}
+
+const redirectToAddList = (req,res) => {
+  res.redirect('/addList.html');
+}
+
+const redirectToHome = (req,res) => {
+  res.redirect('homePage.html');
 }
 
 let app = WebApp.create();
@@ -83,6 +91,8 @@ app.use(loadUser);
 app.use(serveFile);
 app.get('/login',redirectToLogin);
 app.post('/login',checkIfRegisteredUser);
-app.get('/logout',redirectToHome);
+app.get('/logout',redirectToIndex);
+app.get('/addList',redirectToAddList);
+app.post('/homePage',redirectToHome);
 
 module.exports = app;
