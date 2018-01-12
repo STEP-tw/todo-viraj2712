@@ -57,7 +57,8 @@ let serveFile = function(req, res) {
 }
 
 const redirectToLogin = (req, res) => {
-  res.redirect('/login.html');
+  if(req.user) res.redirect('/homePage.html');
+  else res.redirect('/login.html');
 }
 
 const checkIfRegisteredUser = (req, res) => {
@@ -78,7 +79,8 @@ const redirectToIndex = (req, res) => {
 }
 
 const redirectToAddList = (req, res) => {
-  res.redirect('/addList.html');
+  if(req.user) res.redirect('/addList.html');
+  else res.redirect('index.html');
 }
 
 const redirectToHome = (req, res) => {

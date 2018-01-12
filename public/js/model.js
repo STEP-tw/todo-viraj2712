@@ -6,7 +6,10 @@ const User = function(req) {
 }
 
 User.prototype.toHtml = function(data){
-  return `<p>${Object.keys(data)[0]} : ${data[Object.keys(data)[0]]}</p>`;
+  let key = Object.keys(data)[0];
+  let value = data[Object.keys(data)[0]];
+  if(key.includes('%')) key = 'Task';
+  return `<p>${key} : ${value}</p>`;
 }
 
 User.prototype.storeDataInFile = function(data){
