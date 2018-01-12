@@ -15,6 +15,15 @@ let logRequest = (req, res) => {
   console.log(text);
 }
 
+
+let loadUser = (req, res) => {
+  let sessionid = req.cookies.sessionid;
+  let user = registered_users.find(u => u.sessionid == sessionid);
+  if (sessionid && user) {
+    req.user = user;
+  }
+}
+
 let isGetMethod = function(req) {
   return req.method == 'GET';
 }
@@ -47,12 +56,33 @@ let serveFile = function(req, res) {
   };
 }
 
-const redirectToHomePage = function(req,res){
+const redirectToLogin = (req,res) => {
+  res.redirect('/login.html');
+}
+
+const checkIfRegisteredUser = (req, res) => {
+  let user = registered_users.find(u => u.userName == req.body.name)
+  if (!user) {
+    res.setHeader('Set-Cookie', `logInFailed=true`);
+    res.redirect('/login.html');
+    return;
+  }
+  let sessionid = new Date().getTime();
+  res.setHeader('Set-Cookie', `sessionid=${sessionid}`);
+  user.sessionid = sessionid;
+  res.redirect('/homePage.html');
+}
+
+const redirectToHome = (req,res) => {
   res.redirect('/index.html');
 }
 
 let app = WebApp.create();
 app.use(logRequest);
+app.use(loadUser);
 app.use(serveFile);
+app.get('/login',redirectToLogin);
+app.post('/login',checkIfRegisteredUser);
+app.get('/logout',redirectToHome);
 
 module.exports = app;

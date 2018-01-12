@@ -30,4 +30,15 @@ describe('app',()=>{
       })
     })
   })
+  describe('GET /login.html',()=>{
+    it('serves the login page',done=>{
+      request(app,{method:'GET',url:'/login.html'},res=>{
+        th.status_is_ok(res);
+        th.body_contains(res,'Name :');
+        th.body_does_not_contain(res,'login failed');
+        th.should_not_have_cookie(res,'message');
+        done();
+      })
+    })
+  })
 })

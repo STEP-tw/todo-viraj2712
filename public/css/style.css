@@ -16,5 +16,18 @@ hr {
 button {
   margin-left: 130px;
   font-size: 20px;
-  shape-outside: border-box;
+}
+
+h2 {
+  color: orange;
+}
+
+.login {
+  font-size: 20px;
+}
+
+#logoutLink {
+  font-size: 30px;
+  margin-right: 130px;
+  text-align: right;
 }
