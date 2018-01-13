@@ -1,7 +1,6 @@
 let fs = require('fs');
 const WebApp = require('./webapp');
 const storeData = require('./public/js/model.js').storeData;
-const addPara = require('./public/js/view.js').addPara;
 
 let registered_users = [{
     userName: 'viraj',
@@ -94,21 +93,23 @@ const redirectToAddList = (req, res) => {
   else res.redirect('/index.html');
 }
 
-const storeInHtmlFiles = (req,content) => {
+const storeInHtmlFiles = (req, content) => {
   let path = `./public/htmlFiles/${req.user.userName}.html`;
   if (fs.existsSync(path)) {
     content += `--------------------------`;
     fs.appendFile(path, content, () => {});
-  }
-  else {
+  } else {
     fs.writeFileSync(path, content);
   }
 }
 
 const getData = (req) => {
   let data = req.body;
-  data.userName = req.user.userName;
-  return data;
+  let user = {};
+  let title = {};
+  title[req.body.title] = data;
+  user[req.user.userName] = title;
+  return user;
 }
 
 const storeInJsonFile = (req) => {
@@ -122,15 +123,17 @@ const storeInJsonFile = (req) => {
 
 const redirectToHome = (req, res) => {
   let content = storeData(req);
-  storeInHtmlFiles(req,content);
+  storeInHtmlFiles(req, content);
   storeInJsonFile(req);
   res.redirect('/homePage.html');
 }
 
 const redirectToViewList = (req, res) => {
-  res.write(fs.readFileSync('public/viewLists.html'));
-  res.write(fs.readFileSync(`public/htmlFiles/${req.user.userName}.html`));
-  res.end();
+  if (req.user) {
+    res.write(fs.readFileSync('public/viewLists.html'));
+    res.write(fs.readFileSync(`public/htmlFiles/${req.user.userName}.html`));
+    res.end();
+  } else res.redirect('/index.html');
 }
 
 let app = WebApp.create();
