@@ -94,7 +94,7 @@ const redirectToAddList = (req, res) => {
   else res.redirect('/index.html');
 }
 
-const storeDataInFiles = (req,content) => {
+const storeInHtmlFiles = (req,content) => {
   let path = `./public/htmlFiles/${req.user.userName}.html`;
   if (fs.existsSync(path)) {
     content += `--------------------------`;
@@ -105,9 +105,25 @@ const storeDataInFiles = (req,content) => {
   }
 }
 
+const getData = (req) => {
+  let data = req.body;
+  data.userName = req.user.userName;
+  return data;
+}
+
+const storeInJsonFile = (req) => {
+  let data = getData(req);
+  let content = fs.readFileSync('data/data.json', 'utf8');
+  content = JSON.parse(content);
+  content.unshift(data);
+  let contentToStore = JSON.stringify(content, null, 2);
+  fs.writeFileSync('data/data.json', contentToStore);
+}
+
 const redirectToHome = (req, res) => {
   let content = storeData(req);
-  storeDataInFiles(req,content);
+  storeInHtmlFiles(req,content);
+  storeInJsonFile(req);
   res.redirect('/homePage.html');
 }
 
