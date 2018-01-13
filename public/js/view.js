@@ -1,4 +1,4 @@
-var counter = 1;
+var counter = 0;
 var limit = 1 / 0;
 
 const addInput = function() {
