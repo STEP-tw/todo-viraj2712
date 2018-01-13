@@ -1,11 +1,17 @@
 let fs = require('fs');
 const WebApp = require('./webapp');
 const storeData = require('./public/js/model.js').storeData;
+const addPara = require('./public/js/view.js').addPara;
 
 let registered_users = [{
-  userName: 'viraj',
-  name: 'Viraj Patil'
-}];
+    userName: 'viraj',
+    name: 'Viraj Patil'
+  },
+  {
+    userName: 'pranav',
+    name: 'Pranav Bansod'
+  }
+];
 
 let logRequest = (req, res) => {
   let text = ['------------------------------',
@@ -56,7 +62,7 @@ let serveFile = function(req, res) {
 }
 
 const redirectToLogin = (req, res) => {
-  if(req.user) res.redirect('/homePage.html');
+  if (req.user) res.redirect('/homePage.html');
   else res.redirect('/login.html');
 }
 
@@ -74,7 +80,7 @@ const checkIfRegisteredUser = (req, res) => {
 }
 
 const redirectToIndex = (req, res) => {
-  if(!req.user) {
+  if (!req.user) {
     res.redirect('/index.html');
     return;
   }
@@ -84,17 +90,31 @@ const redirectToIndex = (req, res) => {
 }
 
 const redirectToAddList = (req, res) => {
-  if(req.user) res.redirect('/addList.html');
+  if (req.user) res.redirect('/addList.html');
   else res.redirect('/index.html');
 }
 
+const storeDataInFiles = (req,content) => {
+  let path = `./public/htmlFiles/${req.user.userName}.html`;
+  if (fs.existsSync(path)) {
+    content += `--------------------------`;
+    fs.appendFile(path, content, () => {});
+  }
+  else {
+    fs.writeFileSync(path, content);
+  }
+}
+
 const redirectToHome = (req, res) => {
-  storeData(req);
+  let content = storeData(req);
+  storeDataInFiles(req,content);
   res.redirect('/homePage.html');
 }
 
-const redirectToViewList = (req,res) => {
-  res.redirect('/viewLists.html');
+const redirectToViewList = (req, res) => {
+  res.write(fs.readFileSync('public/viewLists.html'));
+  res.write(fs.readFileSync(`public/htmlFiles/${req.user.userName}.html`));
+  res.end();
 }
 
 let app = WebApp.create();
@@ -106,6 +126,6 @@ app.post('/login', checkIfRegisteredUser);
 app.get('/logout', redirectToIndex);
 app.get('/addList', redirectToAddList);
 app.post('/homePage', redirectToHome);
-app.get('/viewLists',redirectToViewList);
+app.get('/viewLists', redirectToViewList);
 
 module.exports = app;

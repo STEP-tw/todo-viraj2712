@@ -12,11 +12,6 @@ User.prototype.toHtml = function(data){
   return `<p>${key} : ${value}</p>`;
 }
 
-User.prototype.storeDataInFile = function(data){
-  let content = data.map(this.toHtml).join('\n');
-  fs.writeFileSync(`public/htmlFiles/lists.html`,content);
-}
-
 User.prototype.updateData = function(data) {
   let keys = Object.keys(data);
   let list = [];
@@ -31,12 +26,13 @@ User.prototype.updateData = function(data) {
 User.prototype.getData = function() {
   let data = this.body;
   let updatedData = this.updateData(data);
-  this.storeDataInFile(updatedData);
+  let content = updatedData.map(this.toHtml).join('\n');
+  return content;
 };
 
 const storeData = function(req) {
   let user = new User(req);
-  user.getData();
+  return user.getData();
 }
 
 exports.storeData = storeData;
