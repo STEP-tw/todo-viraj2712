@@ -70,6 +70,7 @@ describe('app',()=>{
   describe('GET /addList.html',()=>{
     it('serves add todo list page',done=>{
       request(app,{method:'GET',url:'/addList.html'},res=>{
+        th.status_is_ok(res);
         th.body_contains(res,'Title :');
         done();
       })
@@ -94,6 +95,7 @@ describe('app',()=>{
   describe('GET /viewLists.html',()=>{
     it('redirects to page of todo lists',done=>{
       request(app,{method:'GET',url:'/viewLists.html'},res=>{
+        th.status_is_ok(res);
         th.body_contains(res,'Your Todo Lists');
         done();
       })
