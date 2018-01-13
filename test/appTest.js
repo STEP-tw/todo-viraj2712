@@ -86,7 +86,7 @@ describe('app',()=>{
   describe('GET /viewLists',()=>{
     it('redirects to page of todo lists',done=>{
       request(app,{method:'GET',url:'/viewLists'},res=>{
-        th.should_be_redirected_to(res,'/viewLists.html');
+        th.should_be_redirected_to(res,'/index.html');
         done();
       })
     })
