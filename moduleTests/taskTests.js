@@ -1,5 +1,5 @@
 const assert = require('chai').assert;
-const Task = require('../src/task.js');
+const Task = require('../srcModules/task.js');
 
 var task;
 
