@@ -1,5 +1,5 @@
 const assert = require('chai').assert;
-const Todo = require('../srcModules/todo.js');
+const Todo = require('../src/todo.js');
 
 var todo;
 

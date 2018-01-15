@@ -1,5 +1,5 @@
 const assert = require('chai').assert;
-const User = require('../srcModules/user.js');
+const User = require('../src/user.js');
 
 var user;
 

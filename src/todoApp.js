@@ -1,4 +1,4 @@
-const User = require('../srcModules/user.js');
+const User = require('./user.js');
 
 class App {
   constructor() {
@@ -12,23 +12,23 @@ class App {
     this.users[userName] = new User(userName,password);
   }
   getTodo(userName,todoSrNo){
-    return this.users[userName].getTodo(todoSrNo);
+    return this.getUser(userName).getTodo(todoSrNo);
   }
   getTodoTitle(userName,todoSrNo){
-    return this.getTodo(userName,todoSrNo).getTodoTitle(todoSrNo);
+    return this.getUser(userName).getTodoTitle(todoSrNo);
   }
   editTodoTitle(userName,todoSrNo,newTitle){
-    return this.getTodo(userName,todoSrNo).editTodoTitle(todoSrNo,newTitle);
+    return this.getUser(userName).editTodoTitle(todoSrNo,newTitle);
   }
   getTodoDescription(userName,todoSrNo){
-    return this.getTodo(userName,todoSrNo).getTodoDescription(todoSrNo);
+    return this.getUser(userName).getTodoDescription(todoSrNo);
   }
   editTodoDescription(userName,todoSrNo,newDescription){
-    let todo = this.getTodo(userName,todoSrNo);
+    let todo = this.getUser(userName);
     return todo.editTodoDescription(todoSrNo,newDescription);
   }
   addTodo(userName,title, description) {
-    this.getUser(userName).addTodo(title,userName);
+    this.getUser(userName).addTodo(title,description);
   }
   deleteTodo(userName,todoSrNo) {
     delete this.getUser(userName).todos[todoSrNo];
@@ -49,7 +49,7 @@ class App {
     return this.getUser(userName).getTaskStatus(todoSrNo,taskSrNo);
   }
   setTaskStatus(userName,todoSrNo,taskSrNo,status){
-    return this.getUser(userName).getTaskStatus(todoSrNo,taskSrNo,status);
+    return this.getUser(userName).setTaskStatus(todoSrNo,taskSrNo,status);
   }
   getAllTodos(userName){
     return this.getUser(userName).getAllTodos();
