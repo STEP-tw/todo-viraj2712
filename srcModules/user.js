@@ -40,7 +40,7 @@ class User {
     return this.getTodo(todoSrNo).addTask(task);
   }
   deleteTask(todoSrNo, taskSrNo) {
-    delete this.getTodo(todoSrNo).deleteTask(taskSrNo);
+    this.getTodo(todoSrNo).deleteTask(taskSrNo);
   }
   getTaskStatus(todoSrNo, taskSrNo) {
     return this.getTodo(todoSrNo).getTaskStatus(taskSrNo);

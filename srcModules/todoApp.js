@@ -42,6 +42,9 @@ class App {
   addTask(userName,todoSrNo,taskSrNo){
     return this.getUser(userName).addTask(todoSrNo,taskSrNo);
   }
+  deleteTask(userName,todoSrNo,taskSrNo){
+    this.getUser(userName).deleteTask(todoSrNo,taskSrNo);
+  }
   getTaskStatus(userName,todoSrNo,taskSrNo){
     return this.getUser(userName).getTaskStatus(todoSrNo,taskSrNo);
   }
