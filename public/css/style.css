@@ -1,54 +1,27 @@
 h1 {
   text-align: center;
-  color: orange;
+  font-family: serif;
+  color: orangered;
 }
 
 hr {
-  margin: 10px 100px 10px 100px;
+  margin: 15px 100px 15px 100px;
+  border-bottom: 2px solid gray;
 }
 
-#loginLink {
-  font-size: 30px;
-  margin-right: 130px;
+h3 {
+  margin: 5px 130px 5px 0px;
   text-align: right;
 }
 
-#links {
-  margin-left: 130px;
+.loginForm {
   font-size: 20px;
 }
 
-h2 {
-  color: orange;
-}
-
-.login {
+ul {
   font-size: 20px;
 }
 
-#logoutLink {
-  font-size: 30px;
-  margin-right: 130px;
-  text-align: right;
-}
-
-#addItem {
-  margin-right: -800px;
-  font-size: 15px;
-  text-align: right;
-}
-
-#addList {
-  font-size: 20px;
-}
-
-#todoLists {
-  font-size: 20px;
-  margin-left: 130px;
-}
-
-#logoutOption {
-  text-align: right;
-  margin-right: 130px;
-  font-size: 20px;
+#addTaskInput {
+  width: 200px;
 }
