@@ -26,9 +26,24 @@ ul {
   visibility: hidden;
 }
 
+.titleAndDesc {
+  font-size: 20px;
+}
+
 #todoDescription {
   width: 200px;
   height: 40px;
+}
+
+#displayTasks {
+  text-align: left;
+  margin-left: 500px;
+  font-size: 20px;
+}
+
+#taskCheckbox {
+  width: 18px;
+  height: 18px;
 }
 
 #addTaskInput {

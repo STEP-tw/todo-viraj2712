@@ -146,6 +146,9 @@ const postToAddTask = (req, res) => {
   let todoSrNo = req.body.todoSrNo;
   let taskTitle = req.body.taskTitle;
   todo.addTask(userName, todoSrNo, taskTitle);
+  let tasks = todo.getAllTasks(userName, todoSrNo);
+  res.write(toS(tasks));
+  res.end();
 }
 
 const getTodoSrNo = (req, res) => {
@@ -161,6 +164,7 @@ app.use(loadUser);
 app.get('/login', getLogin);
 app.post('/home', postToHome);
 app.get('/home', getHome);
+app.get('/home?',getHome);
 app.get('/logout', getLogout);
 app.get('/index', getIndex);
 app.get('/createTodo', getCreateTodo);

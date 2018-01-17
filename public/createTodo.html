@@ -17,16 +17,19 @@
       <div class="titleAndDesc">
         <br>Title : <input id="todoTitle" name="todoTitle"><br>
         <br>Description : <textarea id="todoDescription" name="todoDescription"></textarea><br>
-        <br><button id="addTodo" onclick="addTodo()">Add Todo</button><br>
+        <br><button id="addTodo" onclick="addTodo()">Add Todo</button>
       </div>
-      <br><div class="displayTasks"></div><br>
+      <div id="displayTasks"></div><br>
       <div class="addTasks">
         <br>
         <input id="addTaskInput">
         <button id="addTask" onclick="addTask()">Add Task</button>
         <br>
       </div>
-      <br><button id="saveButton" onclick="serveHomePage()">save & exit</button><br>
+      <br>
+      <form action="home" method="GET">
+        <button id="saveButton" type="submit">save & exit</button>
+      </form>
     </div>
   </center>
 </body>
