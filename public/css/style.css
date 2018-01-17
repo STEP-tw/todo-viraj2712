@@ -22,11 +22,24 @@ ul {
   font-size: 20px;
 }
 
+#todoSrNo {
+  visibility: hidden;
+}
+
 #todoDescription {
   width: 200px;
   height: 40px;
 }
 
 #addTaskInput {
+  visibility: hidden;
   width: 200px;
+}
+
+#addTask {
+  visibility: hidden;
+}
+
+#saveButton {
+  visibility: hidden;
 }

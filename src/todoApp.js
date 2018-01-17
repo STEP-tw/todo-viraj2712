@@ -39,8 +39,8 @@ class App {
   editTask(userName,todoSrNo,taskSrNo,newTask){
     return this.getUser(userName).editTask(todoSrNo,taskSrNo,newTask);
   }
-  addTask(userName,todoSrNo,taskSrNo){
-    return this.getUser(userName).addTask(todoSrNo,taskSrNo);
+  addTask(userName,todoSrNo,taskTitle){
+    return this.getUser(userName).addTask(todoSrNo,taskTitle);
   }
   deleteTask(userName,todoSrNo,taskSrNo){
     this.getUser(userName).deleteTask(todoSrNo,taskSrNo);
@@ -50,6 +50,9 @@ class App {
   }
   setTaskStatus(userName,todoSrNo,taskSrNo,status){
     return this.getUser(userName).setTaskStatus(todoSrNo,taskSrNo,status);
+  }
+  getTodoSrNo(userName){
+    return this.getUser(userName).getTodoSrNo();
   }
   getAllTodos(userName){
     return this.getUser(userName).getAllTodos();

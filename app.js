@@ -1,5 +1,7 @@
 let fs = require('fs');
 const WebApp = require('./webapp');
+const Todo = require('./src/todoApp');
+const todo = new Todo();
 
 let registered_users = [{
   userName: 'viraj',
@@ -21,6 +23,8 @@ let loadUser = (req, res) => {
     req.user = user;
   }
 }
+
+let toS = o => JSON.stringify(o, null, 2);
 
 let isGetMethod = function (req) {
   return req.method == 'GET';
@@ -47,7 +51,7 @@ const getContentType = function (fileName) {
   return extensions[fileExtension];
 }
 
-const serveFile = function (req, res) {
+const serveStaticFiles = function (req, res) {
   if (req.url == '/') req.url = '/login.html';
   let path = './public' + req.url;
   if (isGetMethod(req) && isFile(path)) {
@@ -76,9 +80,10 @@ const setForLogin = (user, res) => {
   res.redirect('/home');
 }
 
-const postHome = (req, res) => {
+const postToHome = (req, res) => {
   let user = registered_users.find(u => u.userName == req.body.name)
   if (user) {
+    todo.addUser(req.body.name);
     setForLogin(user, res);
   } else setForFailedLogin(res);
 }
@@ -102,7 +107,51 @@ const getIndex = (req, res) => {
 }
 
 const getCreateTodo = (req, res) => {
-  res.write(getFileContent('./public/createTodo.html'));
+  if (req.user) {
+    res.write(getFileContent('./public/createTodo.html'));
+    res.end();
+  } else res.redirect('/login');
+}
+
+const getViewTodo = (req, res) => {
+  if (req.user) {
+    res.write(getFileContent('./public/viewTodo.html'));
+    res.end();
+  } else res.redirect('/login');
+}
+
+const getEditTodo = (req, res) => {
+  if (req.user) {
+    res.write(getFileContent('./public/editTodo.html'));
+    res.end();
+  } else res.redirect('/login');
+}
+
+const getDeleteTodo = (req, res) => {
+  if (req.user) {
+    res.write(getFileContent('./public/deleteTodo.html'));
+    res.end();
+  } else res.redirect('/login');
+}
+
+const postToAddTodo = (req, res) => {
+  let userName = req.user.userName;
+  let todoTitle = req.body.todoTitle;
+  let todoDescription = req.body.todoDescription;
+  todo.addTodo(userName, todoTitle, todoDescription);
+}
+
+const postToAddTask = (req, res) => {
+  let userName = req.user.userName;
+  let todoSrNo = req.body.todoSrNo;
+  let taskTitle = req.body.taskTitle;
+  todo.addTask(userName, todoSrNo, taskTitle);
+}
+
+const getTodoSrNo = (req, res) => {
+  let userName = req.user.userName;
+  let todoSrNo = todo.getTodoSrNo(userName);
+  res.write(toS(todoSrNo));
   res.end();
 }
 
@@ -110,11 +159,17 @@ let app = WebApp.create();
 app.use(logRequest);
 app.use(loadUser);
 app.get('/login', getLogin);
-app.post('/home', postHome);
+app.post('/home', postToHome);
 app.get('/home', getHome);
 app.get('/logout', getLogout);
 app.get('/index', getIndex);
 app.get('/createTodo', getCreateTodo);
-app.use(serveFile);
+app.get('/viewTodo', getViewTodo);
+app.get('/editTodo', getEditTodo);
+app.get('/deleteTodo', getDeleteTodo);
+app.post('/createTodo', postToAddTodo);
+app.post('/addTask', postToAddTask);
+app.get('/getTodoSrNo', getTodoSrNo);
+app.use(serveStaticFiles);
 
 module.exports = app;

@@ -48,6 +48,9 @@ class User {
   setTaskStatus(todoSrNo, taskSrNo, status) {
     return this.getTodo(todoSrNo).setTaskStatus(taskSrNo, status);
   }
+  getTodoSrNo(){
+    return this.todoSrNo;
+  }
   getAllTodos() {
     return this.todos;
   }

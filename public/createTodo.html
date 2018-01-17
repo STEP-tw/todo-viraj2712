@@ -5,7 +5,7 @@
   <title>Create Todo List</title>
   <link rel="stylesheet" href="css/style.css">
   <script type="text/javascript" src="./js/createTodo.js"></script>
-  </script>
+  <label id="todoSrNo"></label>
 </head>
 
 <body>
@@ -17,6 +17,7 @@
       <div class="titleAndDesc">
         <br>Title : <input id="todoTitle" name="todoTitle"><br>
         <br>Description : <textarea id="todoDescription" name="todoDescription"></textarea><br>
+        <br><button id="addTodo" onclick="addTodo()">Add Todo</button><br>
       </div>
       <br><div class="displayTasks"></div><br>
       <div class="addTasks">
@@ -25,7 +26,7 @@
         <button id="addTask" onclick="addTask()">Add Task</button>
         <br>
       </div>
-      <br><button onclick="serveHomePage()">save & exit</button><br>
+      <br><button id="saveButton" onclick="serveHomePage()">save & exit</button><br>
     </div>
   </center>
 </body>
