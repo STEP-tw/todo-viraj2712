@@ -4,7 +4,7 @@ class User {
   constructor(userName, password) {
     this.todoSrNo = 1;
     this.userName = userName;
-    this.password = password;
+    this.password = password || '';
     this.todos = {};
   }
 

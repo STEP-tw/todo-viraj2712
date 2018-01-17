@@ -1,16 +1,10 @@
 let fs = require('fs');
 const WebApp = require('./webapp');
-const storeData = require('./public/js/model.js').storeData;
 
 let registered_users = [{
-    userName: 'viraj',
-    name: 'Viraj Patil'
-  },
-  {
-    userName: 'pranav',
-    name: 'Pranav Bansod'
-  }
-];
+  userName: 'viraj',
+  name: 'Viraj Patil'
+}];
 
 let logRequest = (req, res) => {
   let text = ['------------------------------',
@@ -28,15 +22,19 @@ let loadUser = (req, res) => {
   }
 }
 
-let isGetMethod = function(req) {
+let isGetMethod = function (req) {
   return req.method == 'GET';
 }
 
-let isFile = function(path) {
+let isFile = function (path) {
   return fs.existsSync(path);
 }
 
-const getContentType = function(fileName) {
+const getFileContent = function (path) {
+  return fs.readFileSync(path, 'utf8');
+}
+
+const getContentType = function (fileName) {
   let fileExtension = fileName.slice(fileName.lastIndexOf('.'));
   let extensions = {
     '.gif': 'image/gif',
@@ -49,8 +47,8 @@ const getContentType = function(fileName) {
   return extensions[fileExtension];
 }
 
-let serveFile = function(req, res) {
-  if (req.url == '/') req.url = '/index.html';
+const serveFile = function (req, res) {
+  if (req.url == '/') req.url = '/login.html';
   let path = './public' + req.url;
   if (isGetMethod(req) && isFile(path)) {
     let contentType = getContentType(path);
@@ -60,91 +58,63 @@ let serveFile = function(req, res) {
   };
 }
 
-const redirectToLogin = (req, res) => {
-  if (req.user) res.redirect('/homePage.html');
-  else res.redirect('/login.html');
+const getLogin = (req, res) => {
+  res.write(getFileContent('./public/login.html'));
+  res.end();
 }
 
-const checkIfRegisteredUser = (req, res) => {
-  let user = registered_users.find(u => u.userName == req.body.name)
-  if (!user) {
-    res.setHeader('Set-Cookie', `logInFailed=true`);
-    res.redirect('/login.html');
-    return;
-  }
+const setForFailedLogin = (res) => {
+  res.setHeader('Set-Cookie', `logInFailed=true`);
+  res.redirect('/login');
+  return;
+}
+
+const setForLogin = (user, res) => {
   let sessionid = new Date().getTime();
   res.setHeader('Set-Cookie', `sessionid=${sessionid}`);
   user.sessionid = sessionid;
-  res.redirect('/homePage.html');
+  res.redirect('/home');
 }
 
-const redirectToIndex = (req, res) => {
-  if (!req.user) {
-    res.redirect('/index.html');
-    return;
-  }
-  res.setHeader('Set-Cookie', [`loginFailed=false; Expires=Thu, 01 Jan 1970 00:00:01 GMT;`, `sessionid=0 ; Expires=Thu, 01 Jan 1970 00:00:01 GMT;`]);
-  res.redirect('/index.html')
-  delete req.user.sessionid;
+const postHome = (req, res) => {
+  let user = registered_users.find(u => u.userName == req.body.name)
+  if (user) {
+    setForLogin(user, res);
+  } else setForFailedLogin(res);
 }
 
-const redirectToAddList = (req, res) => {
-  if (req.user) res.redirect('/addList.html');
-  else res.redirect('/index.html');
+const getHome = (req, res) => {
+  if (!req.user) res.redirect('/login');
+  else res.write(getFileContent('./public/index.html'));
+  res.end();
 }
 
-const storeInHtmlFiles = (req, content) => {
-  let path = `./public/htmlFiles/${req.user.userName}.html`;
-  if (fs.existsSync(path)) {
-    content += `--------------------------`;
-    fs.appendFile(path, content, () => {});
-  } else {
-    fs.writeFileSync(path, content);
-  }
-}
-
-const getData = (req) => {
-  let data = req.body;
-  let user = {};
-  let title = {};
-  title[req.body.title] = data;
-  user[req.user.userName] = title;
-  return user;
-}
-
-const storeInJsonFile = (req) => {
-  let data = getData(req);
-  let content = fs.readFileSync('data/data.json', 'utf8');
-  content = JSON.parse(content);
-  content.unshift(data);
-  let contentToStore = JSON.stringify(content, null, 2);
-  fs.writeFileSync('data/data.json', contentToStore);
-}
-
-const redirectToHome = (req, res) => {
-  let content = storeData(req);
-  storeInHtmlFiles(req, content);
-  storeInJsonFile(req);
-  res.redirect('/homePage.html');
-}
-
-const redirectToViewList = (req, res) => {
+const getLogout = (req, res) => {
   if (req.user) {
-    res.write(fs.readFileSync('public/viewLists.html'));
-    res.write(fs.readFileSync(`public/htmlFiles/${req.user.userName}.html`));
-    res.end();
-  } else res.redirect('/index.html');
+    res.setHeader('Set-Cookie', [`loginFailed=false; Expires=Thu, 01 Jan 1970 00:00:01 GMT;`, `sessionid=0 ; Expires=Thu, 01 Jan 1970 00:00:01 GMT;`]);
+    delete req.user.sessionid;
+  }
+  res.redirect('/login');
+}
+
+const getIndex = (req, res) => {
+  res.redirect('/home');
+}
+
+const getCreateTodo = (req, res) => {
+  res.write(getFileContent('./public/createTodo.html'));
+  res.end();
 }
 
 let app = WebApp.create();
 app.use(logRequest);
 app.use(loadUser);
+app.get('/login', getLogin);
+app.post('/home', postHome);
+app.get('/home', getHome);
+app.get('/logout', getLogout);
+app.get('/index', getIndex);
+app.get('/createTodo', getCreateTodo);
 app.use(serveFile);
-app.get('/login', redirectToLogin);
-app.post('/login', checkIfRegisteredUser);
-app.get('/logout', redirectToIndex);
-app.get('/addList', redirectToAddList);
-app.post('/homePage', redirectToHome);
-app.get('/viewLists', redirectToViewList);
 
 module.exports = app;

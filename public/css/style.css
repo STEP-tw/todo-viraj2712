@@ -22,6 +22,11 @@ ul {
   font-size: 20px;
 }
 
+#todoDescription {
+  width: 200px;
+  height: 40px;
+}
+
 #addTaskInput {
   width: 200px;
 }

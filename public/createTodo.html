@@ -4,23 +4,29 @@
 <head>
   <title>Create Todo List</title>
   <link rel="stylesheet" href="css/style.css">
+  <script type="text/javascript" src="./js/createTodo.js"></script>
   </script>
 </head>
 
 <body>
-  <h1><a href="indexPage"> << </a>Create Todo</h1>
+  <h1><a href="index"> << </a>Create Todo</h1>
   <hr>
-  <h3><a href="logoutLink">Logout</a></h3>
+  <h3><a href="logout">Logout</a></h3>
   <center>
-    <form class="createTodoForm" action="" method="PUT">
-      <br>Title :<input type="text"><br>
-      <br>Description :<input type="text"><br>
-      <br><div class="addTasks"></div><br>
-      <br>
-      <input id="addTaskInput" type="text">
-      <button id="addTask">Add Task</button>
-      <br>
-    </form>
+    <div class="createTodoForm">
+      <div class="titleAndDesc">
+        <br>Title : <input id="todoTitle" name="todoTitle"><br>
+        <br>Description : <textarea id="todoDescription" name="todoDescription"></textarea><br>
+      </div>
+      <br><div class="displayTasks"></div><br>
+      <div class="addTasks">
+        <br>
+        <input id="addTaskInput">
+        <button id="addTask" onclick="addTask()">Add Task</button>
+        <br>
+      </div>
+      <br><button onclick="serveHomePage()">save & exit</button><br>
+    </div>
   </center>
 </body>
 
