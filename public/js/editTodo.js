@@ -28,13 +28,20 @@ const viewCurrentTodo = function () {
   let taskIDs = Object.keys(tasks);
   let generatedTasks = taskIDs.reduce(function (accumulate, taskID, i) {
     let taskTitle = tasks[taskID].title;
-    return accumulate += `<input id='taskCheckbox' type='checkbox' id='${taskIDs[i]}' size='100'>${taskTitle}</input><br/>`;
+    return accumulate += `<input id='${taskIDs[i]}' type='text' value='${taskTitle}'>       <button id='${taskIDs[i]}' onclick='saveEditedTask(this.id)'>save</button><br/>`;
   }, ``);
   document.getElementById('todoTitles').innerHTML = '';
-  document.getElementById('todoTitleHeader').innerHTML = `Title : ${todo.title}`;
-  document.getElementById('todoDescHeader').innerHTML = `Description : ${todo.description}`;
+  document.getElementById('todoTitleHeader').innerHTML = `Title : <input type='text' value='${todo.title}'>`;
+  document.getElementById('todoDescHeader').innerHTML = `Description : <input type='text' value='${todo.description}'>`;
   document.getElementById('tasks').innerHTML = `Tasks :`;
   document.getElementById('viewTasks').innerHTML = generatedTasks;
+  document.getElementById('saveTodoButton').style.visibility = 'visible';
+}
+
+const saveEditedTask = function(id){
+  let xmlReq = new XMLHttpRequest();
+  xmlReq.open('POST','/saveEditedTask');
+  xmlReq.send(`taskSrNo=${id}`);
 }
 
 window.onload = viewTodoLists;

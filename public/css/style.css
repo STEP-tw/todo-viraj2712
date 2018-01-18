@@ -72,3 +72,7 @@ h4 {
 #viewTasks {
   margin-left: 250px;
 }
+
+#saveTodoButton {
+  visibility: hidden;
+}

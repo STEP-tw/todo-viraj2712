@@ -123,6 +123,8 @@ const getCreateTodo = (req, res) => {
 }
 
 const getViewTodo = (req, res) => {
+  console.log(req.body);
+  console.log(req.user);
   if (req.user) {
     res.write(getFileContent('./public/viewTodo.html'));
     res.end();
@@ -211,6 +213,7 @@ app.get('/getTodoSrNo', getTodoSrNo);
 app.post('/viewTodoLists', viewTodoLists);
 app.post('/viewSelectedTodo', viewSelectedTodo);
 app.post('/deleteSelectedTodo', deleteSelectedTodo);
+app.post('/saveTodo',getViewTodo);
 
 app.addPostProcessor(serveStaticFiles);
 app.addPostProcessor(fileNotFound);
