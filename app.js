@@ -123,8 +123,6 @@ const getCreateTodo = (req, res) => {
 }
 
 const getViewTodo = (req, res) => {
-  console.log(req.body);
-  console.log(req.user);
   if (req.user) {
     res.write(getFileContent('./public/viewTodo.html'));
     res.end();
@@ -150,6 +148,7 @@ const postToAddTodo = (req, res) => {
   let todoTitle = req.body.todoTitle;
   let todoDescription = req.body.todoDescription;
   todo.addTodo(userName, todoTitle, todoDescription);
+  res.end();
 }
 
 const postToAddTask = (req, res) => {
@@ -159,6 +158,15 @@ const postToAddTask = (req, res) => {
   todo.addTask(userName, todoSrNo, taskTitle);
   let tasks = todo.getAllTasks(userName, todoSrNo);
   res.write(toS(tasks));
+  res.end();
+}
+
+const changeStatus = (req,res) => {
+  let userName = req.user.userName;
+  let todoSrNo = req.body.todoSrNo;
+  let taskSrNo = req.body.taskSrNo;
+  let status = req.body.status == "true";
+  todo.setTaskStatus(userName, todoSrNo, taskSrNo, status);
   res.end();
 }
 
@@ -207,8 +215,9 @@ app.get('/createTodo', getCreateTodo);
 app.get('/viewTodo', getViewTodo);
 app.get('/editTodo', getEditTodo);
 app.get('/deleteTodo', getDeleteTodo);
-app.post('/createTodo', postToAddTodo);
+app.post('/addTodo', postToAddTodo);
 app.post('/addTask', postToAddTask);
+app.post('/changeStatus', changeStatus);
 app.get('/getTodoSrNo', getTodoSrNo);
 app.post('/viewTodoLists', viewTodoLists);
 app.post('/viewSelectedTodo', viewSelectedTodo);

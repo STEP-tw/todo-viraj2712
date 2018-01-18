@@ -2,7 +2,7 @@ const addTodo = function () {
   let todoTitle = document.getElementById('todoTitle').value;
   let todoDescription = document.getElementById('todoDescription').value;
   let xmlReq = new XMLHttpRequest;
-  xmlReq.open('POST', '/createTodo');
+  xmlReq.open('POST', '/addTodo');
   xmlReq.send(`todoTitle=${todoTitle}&todoDescription=${todoDescription}`);
   disableAddTodoButton();
   enableOtherFields();
@@ -39,6 +39,10 @@ const updateTaskList = function () {
   }, ``);
   let textToShow = `Tasks : <br><br> ${generatedTaskCode}`;
   document.getElementById("displayTasks").innerHTML = textToShow;
+  taskKeys.forEach(function (taskKey, index) {
+    let status = tasks[taskKey].completionStatus;
+    document.getElementById(index + 1).checked = status;
+  })
 }
 
 const changeStatus = function (id) {
@@ -46,7 +50,7 @@ const changeStatus = function (id) {
   let todoSrNo = document.getElementById('todoSrNo').value;
   let xmlReq = new XMLHttpRequest();
   xmlReq.open('POST', '/changeStatus');
-  xmlReq.send(`taskSrNo=${srNo}&todoSrNo=${todoSrNo}&status=${status}`);
+  xmlReq.send(`todoSrNo=${todoSrNo}&taskSrNo=${id}&status=${status}`);
 }
 
 const getTodoSrNo = function () {
