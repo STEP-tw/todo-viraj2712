@@ -10,7 +10,7 @@ const displayTodoTitles = function () {
   let todoIDs = Object.keys(allTodos);
   let generatedTodoTitles = todoIDs.reduce(function (accumulate, todoID, i) {
     let todoTitle = allTodos[todoID].title;
-    return accumulate += `<p id='${todoIDs[i]}' onclick='viewSelectedTodo(this.id)'><a id='${todoIDs[i]}'>${todoTitle}</a></p>`;
+    return accumulate += `<p id='${todoIDs[i]}' onclick='viewSelectedTodo(this.id)'><a id='${todoIDs[i]}'>${todoIDs[i]}. ${todoTitle}</a></p>`;
   }, ``);
   document.getElementById('todoTitles').innerHTML = generatedTodoTitles;
 }
