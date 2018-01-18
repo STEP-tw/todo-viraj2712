@@ -30,13 +30,8 @@ const parseCookies = text => {
 
 let invoke = function(req, res) {
   let handler = this._handlers[req.method][req.url];
-  if (!handler) {
-    res.statusCode = 404;
-    res.write('File not found!');
-    res.end();
-    return;
-  }
-  handler(req, res);
+  if (handler) handler(req, res);
+  return;
 }
 
 const initialize = function() {
@@ -45,6 +40,7 @@ const initialize = function() {
     POST: {}
   };
   this._preprocess = [];
+  this._postprocessor = [];
 };
 
 const get = function(url, handler) {
@@ -57,6 +53,10 @@ const post = function(url, handler) {
 
 const use = function(handler) {
   this._preprocess.push(handler);
+};
+
+const addPostProcessor = function (handler) {
+  this._postprocessor.push(handler);
 };
 
 let urlIsOneOf = function(urls) {
@@ -78,6 +78,12 @@ const main = function(req, res) {
     });
     if (res.finished) return;
     invoke.call(this, req, res);
+    if (!res.finished) {
+      this._postprocessor.forEach(fn => {
+        if (res.finished) return;
+        fn(req, res)
+      });
+    }
   });
 };
 
@@ -89,6 +95,7 @@ let create = () => {
   rh.get = get;
   rh.post = post;
   rh.use = use;
+  rh.addPostProcessor = addPostProcessor;
   return rh;
 }
 exports.create = create;

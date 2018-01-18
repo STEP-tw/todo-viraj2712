@@ -52,15 +52,24 @@ const getContentType = function (fileName) {
 }
 
 const serveStaticFiles = function (req, res) {
-  if (req.url == '/') req.url = '/login.html';
   let path = './public' + req.url;
   if (isGetMethod(req) && isFile(path)) {
     let contentType = getContentType(path);
     res.setHeader('Content-type', contentType);
+    res.statusCode = 200;
     res.write(fs.readFileSync(path));
     res.end();
   };
 }
+
+const fileNotFound = function (req, res) {
+  res.statusCode = 404;
+  res.write(`${req.url} not found!`);
+  res.end();
+  return;
+}
+
+const redirectToLogin = (req, res) => res.redirect('/login');
 
 const getLogin = (req, res) => {
   res.write(getFileContent('./public/login.html'));
@@ -161,10 +170,11 @@ const getTodoSrNo = (req, res) => {
 let app = WebApp.create();
 app.use(logRequest);
 app.use(loadUser);
+app.get('/', redirectToLogin);
 app.get('/login', getLogin);
 app.post('/home', postToHome);
 app.get('/home', getHome);
-app.get('/home?',getHome);
+app.get('/home?', getHome);
 app.get('/logout', getLogout);
 app.get('/index', getIndex);
 app.get('/createTodo', getCreateTodo);
@@ -174,6 +184,7 @@ app.get('/deleteTodo', getDeleteTodo);
 app.post('/createTodo', postToAddTodo);
 app.post('/addTask', postToAddTask);
 app.get('/getTodoSrNo', getTodoSrNo);
-app.use(serveStaticFiles);
+app.addPostProcessor(serveStaticFiles);
+app.addPostProcessor(fileNotFound);
 
 module.exports = app;
