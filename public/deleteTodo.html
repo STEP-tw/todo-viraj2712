@@ -4,6 +4,7 @@
 <head>
   <title>Delete Todo Lists</title>
   <link rel="stylesheet" href="css/style.css">
+  <script type="text/javascript" src="./js/deleteTodo.js"></script>
 </head>
 
 <body>
@@ -11,9 +12,15 @@
   <hr>
   <h3><a href="logout">Logout</a></h3>
   <center>
-    <input list='todoTitles' id='todoTitle' oninput="deleteTodo()"/>
-    <datalist id="todoTitles"></datalist>
+    <div id="todoTitles">
+    </div>
   </center>
+  <h4 id="todoTitleHeader"></h4>
+  <h4 id="todoDescHeader"></h4>
+  <h4 id="tasks"></h4>
+  <div>
+    <h4 id="viewTasks"></h4>
+  </div>
 </body>
 
 </html>

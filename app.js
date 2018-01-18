@@ -182,6 +182,15 @@ const viewSelectedTodo = (req,res) => {
   res.end();
 }
 
+const deleteSelectedTodo = (req,res) => {
+  let userName = req.user.userName;
+  let todoSrNo = req.body.todoSrNo;
+  todo.deleteTodo(userName,todoSrNo);
+  let allTodoLists = todo.getAllTodos(userName);
+  res.write(toS(allTodoLists));
+  res.end();
+}
+
 let app = WebApp.create();
 app.use(logRequest);
 app.use(loadUser);
@@ -201,6 +210,7 @@ app.post('/addTask', postToAddTask);
 app.get('/getTodoSrNo', getTodoSrNo);
 app.post('/viewTodoLists', viewTodoLists);
 app.post('/viewSelectedTodo', viewSelectedTodo);
+app.post('/deleteSelectedTodo', deleteSelectedTodo);
 
 app.addPostProcessor(serveStaticFiles);
 app.addPostProcessor(fileNotFound);
