@@ -35,7 +35,7 @@ const updateTaskList = function () {
   let generatedTaskCode = taskKeys.reduce(function (accumulater, taskTitle, index) {
     let title = tasks[taskTitle].title;
     let srNo = index + 1;
-    return accumulater = accumulater + `<input id='taskCheckbox' type='checkbox' id='${srNo}' size='100'>${title}</input><br />`;
+    return accumulater += `<input id='taskCheckbox' type='checkbox' id='${srNo}' size='100'>${title}</input><br/>`;
   }, ``);
   let textToShow = `Tasks : <br><br> ${generatedTaskCode}`;
   document.getElementById("displayTasks").innerHTML = textToShow;
