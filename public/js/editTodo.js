@@ -1,4 +1,5 @@
 let titleID;
+
 const viewTodoLists = function () {
   let xmlReq = new XMLHttpRequest();
   xmlReq.addEventListener('load', displayTodoTitles);

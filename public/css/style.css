@@ -76,3 +76,7 @@ h4 {
 #saveTodoButton {
   visibility: hidden;
 }
+
+#deleteTodoButton {
+  visibility: hidden;
+}
