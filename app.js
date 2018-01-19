@@ -185,10 +185,18 @@ const saveEditedTask = (req,res) => {
   let todoSrNo = req.body.todoSrNo;
   let taskSrNo = req.body.taskSrNo;
   let taskTitle = req.body.taskTitle;
-  console.log(`${taskTitle}&${taskSrNo}&${userName}`);
   let editedTask = todo.editTask(userName,todoSrNo,taskSrNo,taskTitle);
-  console.log(editedTask);
   res.write(toS(editedTask));
+  res.end();
+}
+
+const deleteSelectedTask = (req,res) => {
+  let userName = req.user.userName;
+  let todoSrNo = req.body.todoSrNo;
+  let taskSrNo = req.body.taskSrNo;
+  todo.deleteTask(userName,todoSrNo,taskSrNo);
+  let allTasks = todo.getAllTasks(userName,todoSrNo);
+  res.write(toS(allTasks));
   res.end();
 }
 
@@ -200,7 +208,6 @@ app.use(redirect_user_to_home_if_loggedIn);
 app.get('/', redirectToLogin);
 app.get('/login', getLogin);
 app.get('/home', getHome);
-app.get('/home?', getHome);
 app.get('/logout', getLogout);
 app.get('/index', getIndex);
 app.get('/createTodo', getTodoFiles);
@@ -217,6 +224,7 @@ app.post('/viewSelectedTodo', viewSelectedTodo);
 app.post('/deleteSelectedTodo', deleteSelectedTodo);
 app.post('/saveTodo', getTodoFiles);
 app.post('/saveEditedTask', saveEditedTask);
+app.post('/deleteSelectedTask',deleteSelectedTask);
 
 app.addPostProcessor(serveStaticFiles);
 app.addPostProcessor(fileNotFound);

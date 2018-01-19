@@ -30,7 +30,7 @@ const viewCurrentTodo = function () {
   let taskIDs = Object.keys(tasks);
   let generatedTasks = taskIDs.reduce(function (accumulate, taskID, i) {
     let taskTitle = tasks[taskID].title;
-    return accumulate += `<input id='${taskIDs[i]}' type='text' value='${taskTitle}'>       <button id='button${taskIDs[i]}' onclick='saveEditedTask(this.id)'>save</button><br/>`;
+    return accumulate += `<input id='${taskIDs[i]}' type='text' value='${taskTitle}'> <button id='edit${taskIDs[i]}' onclick='saveEditedTask(this.id)'>Save</button> <button id='delete${taskIDs[i]}' onclick='deleteTask(this.id)'>Delete</button><br/>`;
   }, ``);
   document.getElementById('todoTitles').innerHTML = '';
   document.getElementById('todoTitleHeader').innerHTML = `Title : <input type='text' value='${todo.title}'>`;
@@ -54,6 +54,25 @@ const showEditedTask = function(){
   let task = JSON.parse(this.responseText);
   let taskTitle = task.title;
   document.getElementById(titleID).innerText = taskTitle;
+}
+
+const deleteTask = function(id){
+  titleID=id.slice(-1);
+  let todoSrNo = +(document.getElementById('todoSrNo').value);
+  let xmlReq = new XMLHttpRequest();
+  xmlReq.addEventListener('load',deleteSelectedTask);
+  xmlReq.open('POST','/deleteSelectedTask');
+  xmlReq.send(`todoSrNo=${todoSrNo}&taskSrNo=${titleID}`);
+}
+
+const deleteSelectedTask = function(){
+  let tasks = JSON.parse(this.responseText);
+  let taskIDs = Object.keys(tasks);
+  let generatedTasks = taskIDs.reduce(function (accumulate, taskID, i) {
+    let taskTitle = tasks[taskID].title;
+    return accumulate += `<input id='${taskIDs[i]}' type='text' value='${taskTitle}'> <button id='edit${taskIDs[i]}' onclick='saveEditedTask(this.id)'>Save</button> <button id='delete${taskIDs[i]}' onclick='deleteTask(this.id)'>Delete</button><br/>`;
+  }, ``);
+  document.getElementById('viewTasks').innerHTML = generatedTasks;
 }
 
 window.onload = viewTodoLists;

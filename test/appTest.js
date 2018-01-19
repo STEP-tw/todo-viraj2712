@@ -50,17 +50,6 @@ describe('app', () => {
       })
     })
   })
-  describe('GET /home?', () => {
-    it('redirects to login if not loggedIn', done => {
-      request(app, {
-        method: 'GET',
-        url: '/home?'
-      }, (res) => {
-        th.should_be_redirected_to(res, '/login');
-        done();
-      })
-    })
-  })
   describe('GET /logout', () => {
     it('redirects to login if not loggedIn', done => {
       request(app, {
