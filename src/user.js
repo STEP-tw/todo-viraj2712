@@ -34,7 +34,7 @@ class User {
     return this.getTodo(todoSrNo).getTask(taskSrNo);
   }
   editTask(todoSrNo, taskSrNo, newTask) {
-    this.getTodo(todoSrNo).editTask(taskSrNo, newTask);
+    return this.getTodo(todoSrNo).editTask(taskSrNo, newTask);
   }
   addTask(todoSrNo, task) {
     return this.getTodo(todoSrNo).addTask(task);

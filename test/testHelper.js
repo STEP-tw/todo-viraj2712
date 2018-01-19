@@ -3,6 +3,7 @@ let assert = chai.assert;
 
 let th = {};
 th.should_be_redirected_to = (res,location)=>{
+  console.log(res.headers);
   assert.equal(res.statusCode,302);
   assert.equal(res.headers.location,location);
 };
@@ -17,12 +18,10 @@ th.should_not_have_cookie = (res,name)=> {
   assert.notInclude(cookieText,`${name}=`);
 };
 th.should_have_cookie = (res,name,value)=> {
-  console.log(res.headers);
   let cookieText = res.headers['Set-Cookie'];
   assert.include(cookieText,`${name}=${value}`);
 };
 th.should_have_expiring_cookie = (res,name,value)=> {
-  console.log(res.headers);
   let cookieText = res.headers['Set-Cookie'];
   assert.include(cookieText,`${name}=${value}; Max-Age=5`);
 };
