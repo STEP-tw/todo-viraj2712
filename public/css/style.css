@@ -1,17 +1,12 @@
 h1 {
   text-align: center;
   font-family: serif;
-  color: orangered;
+  color: rgba(38, 45, 194, 0.87);
 }
 
 hr {
   margin: 15px 100px 15px 100px;
   border-bottom: 2px solid gray;
-}
-
-h3 {
-  margin: 5px 130px 5px 0px;
-  text-align: right;
 }
 
 .loginForm {
@@ -92,4 +87,37 @@ h4 {
 
 #saveTodoButtonInEdit {
   visibility: hidden;
+}
+
+.subDiv {
+  display: inline-block;
+  margin-top: 7%;
+  margin-left: 2%;
+  margin-right: 2%;
+}
+
+.options {
+  width:175px;
+  height:175px;
+}
+
+h5 {
+  font-size: 22px;
+  font-family: sans-serif;
+  font-weight: normal;
+  text-align: center;
+}
+
+.logout{
+  color: rgb(159, 84, 35);
+  margin: 5px 130px 5px 0px;
+  text-decoration: none;
+  font-size: 20px;
+  float: right;
+}
+.container{
+  margin-top:2%;
+  margin-left: 10.5%;
+}
+input[type="text"]{
 }

@@ -39,6 +39,7 @@ const getContentType = (fileName) => {
   let fileExtension = fileName.slice(fileName.lastIndexOf('.'));
   let extensions = {
     '.gif': 'image/gif',
+    '.png': 'image/png',
     '.jpg': 'image/jpg',
     '.pdf': 'application/pdf',
     '.html': 'text/html',
@@ -69,12 +70,15 @@ const fileNotFound = (req, res) => {
 const redirectToLogin = (req, res) => res.redirect('/login');
 
 const getLogin = (req, res) => {
-  res.write(getFileContent('./public/login.html'));
+  let fileData=getFileContent('./public/login.html');
+  if(req.cookies.logInFailed) fileData=fileData.replace('placeholder','LOGIN FAILED');
+  else fileData=fileData.replace('placeholder','');
+  res.write(fileData);
   res.end();
 }
 
 const setForFailedLogin = (res) => {
-  res.setHeader('Set-Cookie', `logInFailed=true`);
+  res.setHeader('Set-Cookie', `logInFailed=true; Max-Age=${5}`);
   res.redirect('/login');
   return;
 }
@@ -110,9 +114,9 @@ const getHome = (req, res) => {
 
 const getLogout = (req, res) => {
   todoApp.getUser(req.user.userName).setTodos();
-  res.setHeader('Set-Cookie', [`loginFailed=false; Expires=Thu, 01 Jan 1970 00:00:01 GMT;`, `sessionid=0 ; Expires=Thu, 01 Jan 1970 00:00:01 GMT;`]);
+  res.setHeader('Set-Cookie',`sessionid=0 ; Expires=Thu, 01 Jan 1970 00:00:01 GMT;`);
   delete req.user.sessionid;
-  res.redirect('/logout');
+  res.redirect('/login');
 }
 
 const getIndex = (req, res) => res.redirect('/home');
