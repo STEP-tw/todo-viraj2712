@@ -148,11 +148,11 @@ describe('App', () => {
 
   describe('#editTask()', () => {
     it('should edit the task of given user from given todo from app', () => {
-      app.editTask('vp', 1, 1, 'to eat');
+      app.editTask('vp', 1, 1, 'to eat',true);
       let actual = app.getTask('vp', 1, 1);
       let expected = {
         title: 'to eat',
-        status: false
+        status: true
       };
       assert.deepEqual(actual, expected);
     })

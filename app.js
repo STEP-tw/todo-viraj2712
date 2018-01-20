@@ -139,15 +139,6 @@ const postToAddTask = (req, res) => {
   res.end();
 }
 
-const changeStatus = (req, res) => {
-  let userName = req.user.userName;
-  let todoSrNo = req.body.todoSrNo;
-  let taskSrNo = req.body.taskSrNo;
-  let status = req.body.status == "true";
-  todoApp.setTaskStatus(userName, todoSrNo, taskSrNo, status);
-  res.end();
-}
-
 const getTodoSrNo = (req, res) => {
   let userName = req.user.userName;
   let todoSrNo = todoApp.getTodoSrNo(userName);
@@ -219,7 +210,6 @@ app.get('/getTodoSrNo', getTodoSrNo);
 app.post('/home', postToHome);
 app.post('/addTodo', postToAddTodo);
 app.post('/addTask', postToAddTask);
-app.post('/changeStatus', changeStatus);
 app.post('/viewTodoLists', viewTodoLists);
 app.post('/viewSelectedTodo', viewSelectedTodo);
 app.post('/deleteSelectedTodo', deleteSelectedTodo);

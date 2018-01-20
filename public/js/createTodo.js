@@ -41,14 +41,6 @@ const updateTaskList = function () {
   document.getElementById("displayTasks").innerHTML = textToShow;
 }
 
-const changeStatus = function (id) {
-  let status = document.getElementById(id).checked;
-  let todoSrNo = document.getElementById('todoSrNo').value;
-  let xmlReq = new XMLHttpRequest();
-  xmlReq.open('POST', '/changeStatus');
-  xmlReq.send(`todoSrNo=${todoSrNo}&taskSrNo=${id}&status=${status}`);
-}
-
 const getTodoSrNo = function () {
   let xmlReq = new XMLHttpRequest();
   xmlReq.addEventListener('load', displayTodoSrNo);
