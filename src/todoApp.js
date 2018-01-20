@@ -36,7 +36,8 @@ class App {
   getTask(userName,todoSrNo,taskSrNo){
     return this.getUser(userName).getTask(todoSrNo,taskSrNo);
   }
-  editTask(userName,todoSrNo,taskSrNo,newTask){
+  editTask(userName,todoSrNo,taskSrNo,newTask,status){
+    this.setTaskStatus(userName,todoSrNo,taskSrNo,status);
     return this.getUser(userName).editTask(todoSrNo,taskSrNo,newTask);
   }
   addTask(userName,todoSrNo,taskTitle){

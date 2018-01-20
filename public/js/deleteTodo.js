@@ -31,7 +31,7 @@ const viewCurrentTodo = function () {
   let taskIDs = Object.keys(tasks);
   let generatedTasks = taskIDs.reduce(function (accumulate, taskID, i) {
     let taskTitle = tasks[taskID].title;
-    return accumulate += `<input id='taskCheckbox' type='checkbox' id='${taskIDs[i]}' size='100'>${taskTitle}</input><br/>`;
+    return accumulate += `<label id='${taskIDs[i]}' size='100'>${taskTitle}</label><br/>`;
   }, ``);
   document.getElementById('todoTitles').innerHTML = '';
   document.getElementById('todoTitleHeader').innerHTML = `Title : ${todo.title}`;

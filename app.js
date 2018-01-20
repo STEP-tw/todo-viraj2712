@@ -87,7 +87,6 @@ const setForLogin = (user, res) => {
 }
 
 const postToHome = (req, res) => {
-  console.log(req.body);
   let user = registered_users.find(u => u.userName == req.body.name)
   if (user) {
     todoApp.addUser(req.body.name);
@@ -185,7 +184,9 @@ const saveEditedTask = (req,res) => {
   let todoSrNo = req.body.todoSrNo;
   let taskSrNo = req.body.taskSrNo;
   let taskTitle = req.body.taskTitle;
-  let editedTask = todoApp.editTask(userName,todoSrNo,taskSrNo,taskTitle);
+  let taskStatus = req.body.taskStatus;
+  todoApp.editTask(userName,todoSrNo,taskSrNo,taskTitle,taskStatus);
+  let editedTask = todoApp.getTask(userName,todoSrNo,taskSrNo);
   res.write(toS(editedTask));
   res.end();
 }

@@ -31,7 +31,11 @@ const viewCurrentTodo = function() {
   let taskIDs = Object.keys(tasks);
   let generatedTasks = taskIDs.reduce(function(accumulate, taskID, i) {
     let taskTitle = tasks[taskID].title;
-    return accumulate += `<input id='${taskIDs[i]}' type='text' value='${taskTitle}'> <button id='edit${taskIDs[i]}' onclick='saveEditedTask(this.id)'>Save</button> <button id='delete${taskIDs[i]}' onclick='deleteTask(this.id)'>Delete</button><br/>`;
+    let taskStatus = tasks[taskID].status;
+    let status =  `<input type=checkbox id=status${taskIDs[i]}`;
+    if(taskStatus=='true'||taskStatus==true) status+=' checked';
+    status+='>';
+    return accumulate += `${status}<input id='${taskIDs[i]}' type='text' value='${taskTitle}'> <button id='edit${taskIDs[i]}' onclick='saveEditedTask(this.id)'>Save</button> <button id='delete${taskIDs[i]}' onclick='deleteTask(this.id)'>Delete</button><br/>`;
   }, ``);
   document.getElementById('todoTitles').innerHTML = '';
   document.getElementById('todoTitleHeader').innerHTML = `Title : <input type='text' value='${todo.title}'>`;
@@ -47,10 +51,11 @@ const saveEditedTask = function(id) {
   titleID = id.slice(-1);
   let todoSrNo = +(document.getElementById('todoSrNo').value);
   let taskTitle = document.getElementById(titleID).value;
+  let taskStatus = document.getElementById(`status${titleID}`).checked;
   let xmlReq = new XMLHttpRequest();
   xmlReq.addEventListener('load', showEditedTask);;
   xmlReq.open('POST', '/saveEditedTask');
-  xmlReq.send(`todoSrNo=${todoSrNo}&taskSrNo=${titleID}&taskTitle=${taskTitle}`);
+  xmlReq.send(`todoSrNo=${todoSrNo}&taskSrNo=${titleID}&taskTitle=${taskTitle}&taskStatus=${taskStatus}`);
 }
 
 const showEditedTask = function() {
@@ -68,17 +73,17 @@ const deleteTask = function(id) {
   xmlReq.send(`todoSrNo=${todoSrNo}&taskSrNo=${titleID}`);
 }
 
-const taskGenerater = function(tasks, taskIDs) {
-  return taskIDs.reduce(function(accumulate, taskID, i) {
-    let taskTitle = tasks[taskID].title;
-    return accumulate += `<input id='${taskIDs[i]}' type='text' value='${taskTitle}'> <button id='edit${taskIDs[i]}' onclick='saveEditedTask(this.id)'>Save</button> <button id='delete${taskIDs[i]}' onclick='deleteTask(this.id)'>Delete</button><br/>`;
-  }, ``);
-}
-
 const deleteSelectedTask = function() {
   let tasks = JSON.parse(this.responseText);
   let taskIDs = Object.keys(tasks);
-  let generatedTasks = taskGenerater(tasks, taskIDs);
+  let generatedTasks = taskIDs.reduce(function(accumulate, taskID, i) {
+    let taskTitle = tasks[taskID].title;
+    let taskStatus = tasks[taskID].status;
+    let status =  `<input type=checkbox id=status${taskIDs[i]}`;
+    if(taskStatus=='true'||taskStatus==true) status+=' checked';
+    status+='>';
+    return accumulate += `${status}<input id='${taskIDs[i]}' type='text' value='${taskTitle}'> <button id='edit${taskIDs[i]}' onclick='saveEditedTask(this.id)'>Save</button> <button id='delete${taskIDs[i]}' onclick='deleteTask(this.id)'>Delete</button><br/>`;
+  }, ``);
   document.getElementById('viewTasks').innerHTML = generatedTasks;
 }
 
@@ -94,7 +99,14 @@ const addTaskInEdit = function() {
 const updateTaskList = function() {
   let tasks = JSON.parse(this.responseText);
   let taskIDs = Object.keys(tasks);
-  let generatedTasks = taskGenerater(tasks, taskIDs);
+  let generatedTasks = taskIDs.reduce(function(accumulate, taskID, i) {
+    let taskTitle = tasks[taskID].title;
+    let taskStatus = tasks[taskID].status;
+    let status =  `<input type=checkbox id=status${taskIDs[i]}`;
+    if(taskStatus=='true'||taskStatus==true) status+=' checked';
+    status+='>';
+    return accumulate += `${status}<input id='${taskIDs[i]}' type='text' value='${taskTitle}'> <button id='edit${taskIDs[i]}' onclick='saveEditedTask(this.id)'>Save</button> <button id='delete${taskIDs[i]}' onclick='deleteTask(this.id)'>Delete</button><br/>`;
+  }, ``);
   document.getElementById('viewTasks').innerHTML = generatedTasks;
 }
 

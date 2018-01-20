@@ -35,14 +35,10 @@ const updateTaskList = function () {
   let generatedTaskCode = taskKeys.reduce(function (accumulater, taskTitle, index) {
     let title = tasks[taskTitle].title;
     let srNo = index + 1;
-    return accumulater += `<input type='checkbox' onclick='changeStatus(this.id)' id='${srNo}' size='100'>${title}</input><br/>`;
+    return accumulater += `<label id='${srNo}' size='100'>${title}</label><br/>`;
   }, ``);
   let textToShow = `Tasks : <br><br> ${generatedTaskCode}`;
   document.getElementById("displayTasks").innerHTML = textToShow;
-  taskKeys.forEach(function (taskKey, index) {
-    let status = tasks[taskKey].completionStatus;
-    document.getElementById(index + 1).checked = status;
-  })
 }
 
 const changeStatus = function (id) {
