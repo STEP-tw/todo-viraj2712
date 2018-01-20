@@ -1,7 +1,7 @@
 let fs = require('fs');
 const WebApp = require('./webapp');
 const Todo = require('./src/todoApp');
-const todo = new Todo();
+const todoApp = new Todo();
 
 let registered_users = [{
   userName: 'viraj',
@@ -90,7 +90,7 @@ const postToHome = (req, res) => {
   console.log(req.body);
   let user = registered_users.find(u => u.userName == req.body.name)
   if (user) {
-    todo.addUser(req.body.name);
+    todoApp.addUser(req.body.name);
     setForLogin(user, res);
   } else setForFailedLogin(res);
 }
@@ -126,7 +126,7 @@ const postToAddTodo = (req, res) => {
   let userName = req.user.userName;
   let todoTitle = req.body.todoTitle;
   let todoDescription = req.body.todoDescription;
-  todo.addTodo(userName, todoTitle, todoDescription);
+  todoApp.addTodo(userName, todoTitle, todoDescription);
   res.end();
 }
 
@@ -134,8 +134,8 @@ const postToAddTask = (req, res) => {
   let userName = req.user.userName;
   let todoSrNo = req.body.todoSrNo;
   let taskTitle = req.body.taskTitle;
-  todo.addTask(userName, todoSrNo, taskTitle);
-  let tasks = todo.getAllTasks(userName, todoSrNo);
+  todoApp.addTask(userName, todoSrNo, taskTitle);
+  let tasks = todoApp.getAllTasks(userName, todoSrNo);
   res.write(toS(tasks));
   res.end();
 }
@@ -145,20 +145,20 @@ const changeStatus = (req, res) => {
   let todoSrNo = req.body.todoSrNo;
   let taskSrNo = req.body.taskSrNo;
   let status = req.body.status == "true";
-  todo.setTaskStatus(userName, todoSrNo, taskSrNo, status);
+  todoApp.setTaskStatus(userName, todoSrNo, taskSrNo, status);
   res.end();
 }
 
 const getTodoSrNo = (req, res) => {
   let userName = req.user.userName;
-  let todoSrNo = todo.getTodoSrNo(userName);
+  let todoSrNo = todoApp.getTodoSrNo(userName);
   res.write(toS(todoSrNo));
   res.end();
 }
 
 const viewTodoLists = (req, res) => {
   let userName = req.user.userName;
-  let allTodoLists = todo.getAllTodos(userName);
+  let allTodoLists = todoApp.getAllTodos(userName);
   res.write(toS(allTodoLists));
   res.end();
 }
@@ -166,7 +166,7 @@ const viewTodoLists = (req, res) => {
 const viewSelectedTodo = (req, res) => {
   let userName = req.user.userName;
   let todoSrNo = req.body.todoSrNo;
-  let currentTodo = todo.getTodo(userName, todoSrNo);
+  let currentTodo = todoApp.getTodo(userName, todoSrNo);
   res.write(toS(currentTodo));
   res.end();
 }
@@ -174,8 +174,8 @@ const viewSelectedTodo = (req, res) => {
 const deleteSelectedTodo = (req, res) => {
   let userName = req.user.userName;
   let todoSrNo = req.body.todoSrNo;
-  todo.deleteTodo(userName, todoSrNo);
-  let allTodoLists = todo.getAllTodos(userName);
+  todoApp.deleteTodo(userName, todoSrNo);
+  let allTodoLists = todoApp.getAllTodos(userName);
   res.write(toS(allTodoLists));
   res.end();
 }
@@ -185,7 +185,7 @@ const saveEditedTask = (req,res) => {
   let todoSrNo = req.body.todoSrNo;
   let taskSrNo = req.body.taskSrNo;
   let taskTitle = req.body.taskTitle;
-  let editedTask = todo.editTask(userName,todoSrNo,taskSrNo,taskTitle);
+  let editedTask = todoApp.editTask(userName,todoSrNo,taskSrNo,taskTitle);
   res.write(toS(editedTask));
   res.end();
 }
@@ -194,8 +194,8 @@ const deleteSelectedTask = (req,res) => {
   let userName = req.user.userName;
   let todoSrNo = req.body.todoSrNo;
   let taskSrNo = req.body.taskSrNo;
-  todo.deleteTask(userName,todoSrNo,taskSrNo);
-  let allTasks = todo.getAllTasks(userName,todoSrNo);
+  todoApp.deleteTask(userName,todoSrNo,taskSrNo);
+  let allTasks = todoApp.getAllTasks(userName,todoSrNo);
   res.write(toS(allTasks));
   res.end();
 }

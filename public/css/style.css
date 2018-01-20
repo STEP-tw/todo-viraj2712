@@ -80,3 +80,16 @@ h4 {
 #deleteTodoButton {
   visibility: hidden;
 }
+
+#addTaskInputInEdit {
+  visibility: hidden;
+  width: 200px;
+}
+
+#addTaskInEdit {
+  visibility: hidden;
+}
+
+#saveTodoButtonInEdit {
+  visibility: hidden;
+}
