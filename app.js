@@ -109,6 +109,7 @@ const getHome = (req, res) => {
 }
 
 const getLogout = (req, res) => {
+  todoApp.getUser(req.user.userName).setTodos();
   res.setHeader('Set-Cookie', [`loginFailed=false; Expires=Thu, 01 Jan 1970 00:00:01 GMT;`, `sessionid=0 ; Expires=Thu, 01 Jan 1970 00:00:01 GMT;`]);
   delete req.user.sessionid;
   res.redirect('/logout');
