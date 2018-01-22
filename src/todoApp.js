@@ -8,11 +8,8 @@ class App {
   getUser(userName) {
     return this.users[userName];
   }
-  addUser(userName, password) {
-    this.users[userName] = new User(userName, password);
-  }
-  pushUser(user) {
-    this.users[user.userName] = user;
+  addUser(userName) {
+    this.users[userName] = new User(userName);
   }
   getTodo(userName, todoSrNo) {
     return this.getUser(userName).getTodo(todoSrNo);
@@ -80,7 +77,6 @@ class App {
           newUser.addTask(todoID, task.title, task.status);
         })
       })
-      // self.pushUser(newUser);
     })
   }
 }

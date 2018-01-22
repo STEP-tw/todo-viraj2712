@@ -32,6 +32,12 @@ describe('Todo', () => {
       let expected = 'eat';
       assert.equal(actual, expected);
     })
+    it('should return the description of todo as empty string if not given', () => {
+      todo= new Todo('office');
+      let actual = todo.getDescription();
+      let expected = '';
+      assert.equal(actual, expected);
+    })
   })
 
   describe('#editDescription()', () => {

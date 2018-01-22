@@ -29,6 +29,14 @@ describe('User', () => {
     })
   })
 
+  describe('#getTodoSrNo()', ()=>{
+    it('should return the todoSrNo of the specific todo of given user', () => {
+      let actual = user.getTodoSrNo();
+      let expected = 2;
+      assert.equal(actual, expected);
+    })
+  })
+
   describe('#getTodoTitle()', () => {
     it('should return the title of specific todo of given user', () => {
       let actual = user.getTodoTitle(1);

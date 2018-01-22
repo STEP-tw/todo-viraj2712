@@ -1,10 +1,9 @@
 const Todo = require('./todo.js');
 
 class User {
-  constructor(userName, password) {
+  constructor(userName) {
     this.todoSrNo = 1;
     this.userName = userName;
-    this.password = password || '';
     this.todos = {};
   }
 

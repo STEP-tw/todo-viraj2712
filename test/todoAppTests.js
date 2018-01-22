@@ -1,13 +1,13 @@
 const assert = require('chai').assert;
-const App = require('../src/todoApp.js');
-
+const App = require('../src/todoApp');
+const User = require('../src/user');
 var app;
 
 describe('App', () => {
 
   beforeEach(() => {
     app = new App();
-    app.addUser('vp', 2712);
+    app.addUser('vp');
     app.addTodo('vp', 'pg', 'eat');
     app.addTask('vp', 1, 'to sleep');
   })
@@ -17,7 +17,6 @@ describe('App', () => {
       let actual = app.getUser('vp');
       let expected = {
         userName: 'vp',
-        password: 2712,
         todoSrNo: 2,
         todos: {
           1: {
@@ -39,11 +38,10 @@ describe('App', () => {
 
   describe('#addUser()', () => {
     it('should add the given user in app', () => {
-      app.addUser('v', 1);
+      app.addUser('v');
       let actual = app.getUser('v');
       let expected = {
         userName: 'v',
-        password: 1,
         todoSrNo: 1,
         todos: {}
       };
@@ -148,7 +146,7 @@ describe('App', () => {
 
   describe('#editTask()', () => {
     it('should edit the task of given user from given todo from app', () => {
-      app.editTask('vp', 1, 1, 'to eat',true);
+      app.editTask('vp', 1, 1, 'to eat', true);
       let actual = app.getTask('vp', 1, 1);
       let expected = {
         title: 'to eat',
@@ -209,6 +207,14 @@ describe('App', () => {
     })
   })
 
+  describe('#getTodoSrNo()', () => {
+    it('should return the todoSrNo of the specific todo of given user from app', () => {
+      let actual = app.getTodoSrNo('vp');
+      let expected = 2;
+      assert.equal(actual, expected);
+    })
+  })
+
   describe('#getAllTodos()', () => {
     it('should return the all todos of given user from app', () => {
       let actual = app.getAllTodos('vp');
@@ -247,4 +253,68 @@ describe('App', () => {
     })
   })
 
+  describe('#retrive()', () => {
+    it('should do nothing if data is not available', () => {
+      let user = new User('vp');
+      let data = {};
+      app.retrive(user, data);
+      assert.equal(user.getTodoSrNo(), 1);
+    })
+    it('should assign properties to todos', () => {
+      let user = new User('vp');
+      let data = {
+        'vp': {
+          '1': {
+            'taskSrNo': 1,
+            'title': 'vgbhj',
+            'description': 'ghvjni',
+            'tasks': {}
+          }
+        }
+      };
+      let expected = {
+        'taskSrNo': 1,
+        'title': 'vgbhj',
+        'description': 'ghvjni',
+        'tasks': {}
+      }
+      app.retrive(user, data);
+      assert.equal(user.getTodoSrNo(), 2);
+      assert.deepEqual(user.getTodo(1), expected);
+    })
+    it('should assign properties to tasks', () => {
+      let user = new User('vp');
+      let expectedTask = {
+        "title": "gvhjk",
+        "status": false
+      }
+      let expectedTodo = {
+        'taskSrNo': 2,
+        'title': 'vgbhj',
+        'description': 'ghvjni',
+        'tasks': {
+          "1": expectedTask
+        }
+      }
+      let data = {
+        'vp': {
+          '1': {
+            'taskSrNo': 2,
+            'title': 'vgbhj',
+            'description': 'ghvjni',
+            'tasks': {
+              "1": {
+                "title": "gvhjk",
+                "status": false
+              }
+            }
+          }
+        }
+      };
+      app.retrive(user, data);
+      assert.equal(user.getTodoSrNo(), 2);
+      assert.deepEqual(user.getTodo(1), expectedTodo);
+      assert.deepEqual(user.getTask(1, 1), expectedTask);
+    })
+  })
 })
