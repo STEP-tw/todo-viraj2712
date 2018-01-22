@@ -6,7 +6,9 @@ h1 {
 
 hr {
   margin: 15px 100px 15px 100px;
-  border-bottom: 2px solid gray;
+  border: 0px;
+  height:3px;
+  border-bottom: 2px solid rgb(255, 0, 0);
 }
 
 .loginForm {
@@ -115,9 +117,33 @@ h5 {
   font-size: 20px;
   float: right;
 }
+
 .container{
   margin-top:2%;
   margin-left: 10.5%;
 }
+
 input[type="text"]{
+ width:200px;
+ height:20px;
+ font-size: 15px;
+ border-radius: 3px;
+ border: 1px solid darkGray;
+ font-family: sans-serif;
+}
+
+textarea{
+  font-size: 15px;
+  border-radius: 3px;
+  border: 1px solid darkGray;
+  font-family: sans-serif;
+}
+label{
+  font-family: sans-serif;
+}
+.mainForm{
+  text-align: center;
+  padding:0px;
+  margin-top: 2%;
+  margin-left:10%;
 }

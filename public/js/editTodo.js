@@ -32,9 +32,9 @@ const viewCurrentTodo = function() {
   let generatedTasks = taskIDs.reduce(function(accumulate, taskID, i) {
     let taskTitle = tasks[taskID].title;
     let taskStatus = tasks[taskID].status;
-    let status =  `<input type=checkbox id=status${taskIDs[i]}`;
-    if(taskStatus=='true'||taskStatus==true) status+=' checked';
-    status+='>';
+    let status = `<input type=checkbox id=status${taskIDs[i]}`;
+    if (taskStatus == 'true' || taskStatus == true) status += ' checked';
+    status += '>';
     return accumulate += `${status}<input id='${taskIDs[i]}' type='text' value='${taskTitle}'> <button id='edit${taskIDs[i]}' onclick='saveEditedTask(this.id)'>Save</button> <button id='delete${taskIDs[i]}' onclick='deleteTask(this.id)'>Delete</button><br/>`;
   }, ``);
   document.getElementById('todoTitles').innerHTML = '';
@@ -79,9 +79,9 @@ const deleteSelectedTask = function() {
   let generatedTasks = taskIDs.reduce(function(accumulate, taskID, i) {
     let taskTitle = tasks[taskID].title;
     let taskStatus = tasks[taskID].status;
-    let status =  `<input type=checkbox id=status${taskIDs[i]}`;
-    if(taskStatus=='true'||taskStatus==true) status+=' checked';
-    status+='>';
+    let status = `<input type=checkbox id=status${taskIDs[i]}`;
+    if (taskStatus == 'true' || taskStatus == true) status += ' checked';
+    status += '>';
     return accumulate += `${status}<input id='${taskIDs[i]}' type='text' value='${taskTitle}'> <button id='edit${taskIDs[i]}' onclick='saveEditedTask(this.id)'>Save</button> <button id='delete${taskIDs[i]}' onclick='deleteTask(this.id)'>Delete</button><br/>`;
   }, ``);
   document.getElementById('viewTasks').innerHTML = generatedTasks;
@@ -102,9 +102,9 @@ const updateTaskList = function() {
   let generatedTasks = taskIDs.reduce(function(accumulate, taskID, i) {
     let taskTitle = tasks[taskID].title;
     let taskStatus = tasks[taskID].status;
-    let status =  `<input type=checkbox id=status${taskIDs[i]}`;
-    if(taskStatus=='true'||taskStatus==true) status+=' checked';
-    status+='>';
+    let status = `<input type=checkbox id=status${taskIDs[i]}`;
+    if (taskStatus == 'true' || taskStatus == true) status += ' checked';
+    status += '>';
     return accumulate += `${status}<input id='${taskIDs[i]}' type='text' value='${taskTitle}'> <button id='edit${taskIDs[i]}' onclick='saveEditedTask(this.id)'>Save</button> <button id='delete${taskIDs[i]}' onclick='deleteTask(this.id)'>Delete</button><br/>`;
   }, ``);
   document.getElementById('viewTasks').innerHTML = generatedTasks;

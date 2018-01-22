@@ -20,26 +20,26 @@ class Todo {
   editDescription(newDescription) {
     return this.description = newDescription;
   }
-  getTask(taskSrNo){
+  getTask(taskSrNo) {
     return this.tasks[taskSrNo];
   }
-  addTask(task) {
-    this.tasks[this.taskSrNo] = new Task(task);
+  addTask(task, status) {
+    this.tasks[this.taskSrNo] = new Task(task, status);
     this.increaseSrNo();
   }
-  editTask(taskSrNo,newTask){
+  editTask(taskSrNo, newTask) {
     return this.getTask(taskSrNo).setTask(newTask);
   }
-  deleteTask(taskSrNo){
+  deleteTask(taskSrNo) {
     delete this.tasks[taskSrNo];
   }
-  getTaskStatus(taskSrNo){
+  getTaskStatus(taskSrNo) {
     return this.getTask(taskSrNo).getStatus();
   }
-  setTaskStatus(taskSrNo,status){
+  setTaskStatus(taskSrNo, status) {
     return this.getTask(taskSrNo).setStatus(status);
   }
-  getAllTasks(){
+  getAllTasks() {
     return this.tasks;
   }
   increaseSrNo() {

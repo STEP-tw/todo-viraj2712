@@ -4,7 +4,7 @@ let request = require('./requestSimulator.js');
 let app = require('../app.js');
 let th = require('./testHelper.js');
 
-describe('app', () => {
+describe.skip('app', () => {
   describe('GET /bad', () => {
     it('responds with 404', done => {
       request(app, {
@@ -174,7 +174,7 @@ describe('app', () => {
       })
     })
   })
-  describe.skip('POST /deleteTodo', () => {
+  describe('POST /deleteTodo', () => {
     it('redirects to login if not loggedIn', done => {
       request(app, {
         method: 'POST',
@@ -185,7 +185,7 @@ describe('app', () => {
       })
     })
   })
-  describe.skip('POST /deleteTodo', () => {
+  describe('POST /deleteTodo', () => {
     it('redirects to login if not loggedIn', done => {
       request(app, {
         method: 'POST',

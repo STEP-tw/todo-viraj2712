@@ -1,7 +1,7 @@
 class Task {
-  constructor(title) {
+  constructor(title, status) {
     this.title = title;
-    this.status = false;
+    this.status = status || false;
   }
 
   getTask() {
@@ -10,7 +10,7 @@ class Task {
   setTask(newTask) {
     return this.title = newTask;
   }
-  setStatus(status){
+  setStatus(status) {
     return this.status = status;
   }
   getStatus() {
