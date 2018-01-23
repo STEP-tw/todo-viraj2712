@@ -47,10 +47,10 @@ class User {
   setTaskStatus(todoID, taskID, status) {
     return this.getTodo(todoID).setTaskStatus(taskID, status);
   }
-  gettodoID() {
+  getTodoID() {
     return this.todoID;
   }
-  settodoIDs(){
+  setTodoIDs(){
     let todos=this.todos;
     let todoIDs = Object.keys(todos);
     let id = 1;

@@ -29,9 +29,9 @@ describe('User', () => {
     })
   })
 
-  describe('#gettodoID()', () => {
+  describe('#getTodoID()', () => {
     it('should return the todoID of the specific todo of given user', () => {
-      let actual = user.gettodoID();
+      let actual = user.getTodoID();
       let expected = 2;
       assert.equal(actual, expected);
     })
@@ -170,11 +170,11 @@ describe('User', () => {
     })
   })
 
-  describe('#settodoIDs()', () => {
+  describe('#setTodoIDs()', () => {
     it('should rearrange todo IDs of given user', () => {
       user.addTodo('office', 'sleep');
       user.deleteTodo(1);
-      user.settodoIDs();
+      user.setTodoIDs();
       let actual = user.getAllTodos();
       console.log(actual);
       let expected = {

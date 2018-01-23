@@ -52,11 +52,11 @@ class App {
   setTaskStatus(userName, todoID, taskID, status) {
     return this.getUser(userName).setTaskStatus(todoID, taskID, status);
   }
-  gettodoID(userName) {
-    return this.getUser(userName).gettodoID();
+  getTodoID(userName) {
+    return this.getUser(userName).getTodoID();
   }
-  settodoIDs(userName){
-    this.getUser(userName).settodoIDs();
+  setTodoIDs(userName){
+    this.getUser(userName).setTodoIDs();
   }
   getAllTodos(userName) {
     return this.getUser(userName).getAllTodos();

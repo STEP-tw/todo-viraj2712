@@ -69,7 +69,7 @@ const postToHome = (req, res) => {
 
 const isValidUrl = (url) => {
   let urls = ['/', '/home', '/logout', '/index', '/createTodo', '/viewTodo', '/editTodo', '/deleteTodo',
-    '/gettodoID', '/addTodo', '/addTask', '/viewTodoLists', '/viewSelectedTodo', '/deleteSelectedTodo',
+    '/getTodoID', '/addTodo', '/addTask', '/viewTodoLists', '/viewSelectedTodo', '/deleteSelectedTodo',
     '/saveTodo', '/saveEditedTask', '/deleteSelectedTask'
   ];
   return urls.includes(url);
@@ -127,9 +127,9 @@ const postToAddTask = (req, res) => {
   lib.writeDataToFile(app.fs, app.path, app.data);
 }
 
-const gettodoID = (req, res) => {
+const getTodoID = (req, res) => {
   let userName = req.user.userName;
-  let todoID = todoApp.gettodoID(userName);
+  let todoID = todoApp.getTodoID(userName);
   res.write(lib.toS(todoID));
   res.end();
 }
@@ -153,7 +153,7 @@ const deleteSelectedTodo = (req, res) => {
   let userName = req.user.userName;
   let todoID = req.body.todoID;
   todoApp.deleteTodo(userName, todoID);
-  todoApp.settodoIDs(userName);
+  todoApp.setTodoIDs(userName);
   let allTodoLists = todoApp.getAllTodos(userName);
   res.write(lib.toS(allTodoLists));
   res.end();
@@ -214,7 +214,7 @@ app.get('/createTodo', getTodoFiles);
 app.get('/viewTodo', getTodoFiles);
 app.get('/editTodo', getTodoFiles);
 app.get('/deleteTodo', getTodoFiles);
-app.get('/gettodoID', gettodoID);
+app.get('/getTodoID', getTodoID);
 app.post('/login', postToHome);
 app.post('/addTodo', postToAddTodo);
 app.post('/addTask', postToAddTask);

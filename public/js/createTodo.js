@@ -41,10 +41,10 @@ const updateTaskList = function () {
   document.getElementById("displayTasks").innerHTML = textToShow;
 }
 
-const gettodoID = function () {
+const getTodoID = function () {
   let xmlReq = new XMLHttpRequest();
   xmlReq.addEventListener('load', displaytodoID);
-  xmlReq.open('GET', '/gettodoID');
+  xmlReq.open('GET', '/getTodoID');
   xmlReq.send();
 }
 
@@ -52,4 +52,4 @@ const displaytodoID = function () {
   document.getElementById('todoID').value = +this.responseText;
 }
 
-window.onload = gettodoID;
+window.onload = getTodoID;

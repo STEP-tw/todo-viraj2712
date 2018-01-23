@@ -207,19 +207,19 @@ describe('App', () => {
     })
   })
 
-  describe('#gettodoID()', () => {
+  describe('#getTodoID()', () => {
     it('should return the todoID of the specific todo of given user from app', () => {
-      let actual = app.gettodoID('vp');
+      let actual = app.getTodoID('vp');
       let expected = 2;
       assert.equal(actual, expected);
     })
   })
 
-  describe('#settodoIDs()', () => {
+  describe('#setTodoIDs()', () => {
     it('should rearrange todo IDs of given user', () => {
       app.addTodo('vp','office', 'sleep');
       app.deleteTodo('vp',1);
-      app.settodoIDs('vp');
+      app.setTodoIDs('vp');
       let actual = app.getAllTodos('vp');
       console.log(actual);
       let expected = {
@@ -277,7 +277,7 @@ describe('App', () => {
       let user = new User('vp');
       let data = {};
       app.retrive(user, data);
-      assert.equal(user.gettodoID(), 1);
+      assert.equal(user.getTodoID(), 1);
     })
     it('should assign properties to todos', () => {
       let user = new User('vp');
@@ -298,7 +298,7 @@ describe('App', () => {
         'tasks': {}
       }
       app.retrive(user, data);
-      assert.equal(user.gettodoID(), 2);
+      assert.equal(user.getTodoID(), 2);
       assert.deepEqual(user.getTodo(1), expected);
     })
     it('should assign properties to tasks', () => {
@@ -331,7 +331,7 @@ describe('App', () => {
         }
       };
       app.retrive(user, data);
-      assert.equal(user.gettodoID(), 2);
+      assert.equal(user.getTodoID(), 2);
       assert.deepEqual(user.getTodo(1), expectedTodo);
       assert.deepEqual(user.getTask(1, 1), expectedTask);
     })
