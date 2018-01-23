@@ -17,12 +17,12 @@ describe('App', () => {
       let actual = app.getUser('vp');
       let expected = {
         userName: 'vp',
-        todoSrNo: 2,
+        todoID: 2,
         todos: {
           1: {
             title: 'pg',
             description: 'eat',
-            taskSrNo: 2,
+            taskID: 2,
             tasks: {
               1: {
                 status: false,
@@ -42,7 +42,7 @@ describe('App', () => {
       let actual = app.getUser('v');
       let expected = {
         userName: 'v',
-        todoSrNo: 1,
+        todoID: 1,
         todos: {}
       };
       assert.deepEqual(actual, expected);
@@ -55,7 +55,7 @@ describe('App', () => {
       let expected = {
         title: 'pg',
         description: 'eat',
-        taskSrNo: 2,
+        taskID: 2,
         tasks: {
           1: {
             status: false,
@@ -108,7 +108,7 @@ describe('App', () => {
       let expected = {
         title: 'office',
         description: 'sleep',
-        taskSrNo: 1,
+        taskID: 1,
         tasks: {}
       };
       assert.deepEqual(actual, expected);
@@ -124,7 +124,7 @@ describe('App', () => {
         2: {
           title: 'office',
           description: 'sleep',
-          taskSrNo: 1,
+          taskID: 1,
           tasks: {}
         }
       };
@@ -207,11 +207,30 @@ describe('App', () => {
     })
   })
 
-  describe('#getTodoSrNo()', () => {
-    it('should return the todoSrNo of the specific todo of given user from app', () => {
-      let actual = app.getTodoSrNo('vp');
+  describe('#gettodoID()', () => {
+    it('should return the todoID of the specific todo of given user from app', () => {
+      let actual = app.gettodoID('vp');
       let expected = 2;
       assert.equal(actual, expected);
+    })
+  })
+
+  describe('#settodoIDs()', () => {
+    it('should rearrange todo IDs of given user', () => {
+      app.addTodo('vp','office', 'sleep');
+      app.deleteTodo('vp',1);
+      app.settodoIDs('vp');
+      let actual = app.getAllTodos('vp');
+      console.log(actual);
+      let expected = {
+        1: {
+          title: 'office',
+          description: 'sleep',
+          taskID: 1,
+          tasks: {}
+        }
+      };
+      assert.deepEqual(actual, expected);
     })
   })
 
@@ -222,7 +241,7 @@ describe('App', () => {
         1: {
           title: 'pg',
           description: 'eat',
-          taskSrNo: 2,
+          taskID: 2,
           tasks: {
             1: {
               title: 'to sleep',
@@ -258,14 +277,14 @@ describe('App', () => {
       let user = new User('vp');
       let data = {};
       app.retrive(user, data);
-      assert.equal(user.getTodoSrNo(), 1);
+      assert.equal(user.gettodoID(), 1);
     })
     it('should assign properties to todos', () => {
       let user = new User('vp');
       let data = {
         'vp': {
           '1': {
-            'taskSrNo': 1,
+            'taskID': 1,
             'title': 'vgbhj',
             'description': 'ghvjni',
             'tasks': {}
@@ -273,13 +292,13 @@ describe('App', () => {
         }
       };
       let expected = {
-        'taskSrNo': 1,
+        'taskID': 1,
         'title': 'vgbhj',
         'description': 'ghvjni',
         'tasks': {}
       }
       app.retrive(user, data);
-      assert.equal(user.getTodoSrNo(), 2);
+      assert.equal(user.gettodoID(), 2);
       assert.deepEqual(user.getTodo(1), expected);
     })
     it('should assign properties to tasks', () => {
@@ -289,7 +308,7 @@ describe('App', () => {
         "status": false
       }
       let expectedTodo = {
-        'taskSrNo': 2,
+        'taskID': 2,
         'title': 'vgbhj',
         'description': 'ghvjni',
         'tasks': {
@@ -299,7 +318,7 @@ describe('App', () => {
       let data = {
         'vp': {
           '1': {
-            'taskSrNo': 2,
+            'taskID': 2,
             'title': 'vgbhj',
             'description': 'ghvjni',
             'tasks': {
@@ -312,7 +331,7 @@ describe('App', () => {
         }
       };
       app.retrive(user, data);
-      assert.equal(user.getTodoSrNo(), 2);
+      assert.equal(user.gettodoID(), 2);
       assert.deepEqual(user.getTodo(1), expectedTodo);
       assert.deepEqual(user.getTask(1, 1), expectedTask);
     })

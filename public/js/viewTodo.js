@@ -19,7 +19,7 @@ const viewSelectedTodo = function (id) {
   let xmlReq = new XMLHttpRequest();
   xmlReq.addEventListener('load', viewCurrentTodo);
   xmlReq.open('POST', '/viewSelectedTodo');
-  xmlReq.send(`todoSrNo=${id}`);
+  xmlReq.send(`todoID=${id}`);
 }
 
 const viewCurrentTodo = function () {

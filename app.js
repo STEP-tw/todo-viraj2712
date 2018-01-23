@@ -14,9 +14,7 @@ let logRequest = (req, res) => {
 let loadUser = (req, res) => {
   let sessionid = req.cookies.sessionid;
   let user = app.registered_users.find(u => u.sessionid == sessionid);
-  if (sessionid && user) {
-    req.user = user;
-  }
+  if (sessionid && user) req.user = user;
 }
 
 const serveStaticFiles = (req, res) => {
@@ -48,7 +46,7 @@ const getLogin = (req, res) => {
 }
 
 const setForFailedLogin = (res) => {
-  res.setHeader('Set-Cookie', `logInFailed=true; Max-Age=${5}`);
+  res.setHeader('Set-Cookie', `logInFailed=true; Max-Age=${3}`);
   res.redirect('/login');
   return;
 }
@@ -71,7 +69,7 @@ const postToHome = (req, res) => {
 
 const isValidUrl = (url) => {
   let urls = ['/', '/home', '/logout', '/index', '/createTodo', '/viewTodo', '/editTodo', '/deleteTodo',
-    '/getTodoSrNo', '/addTodo', '/addTask', '/viewTodoLists', '/viewSelectedTodo', '/deleteSelectedTodo',
+    '/gettodoID', '/addTodo', '/addTask', '/viewTodoLists', '/viewSelectedTodo', '/deleteSelectedTodo',
     '/saveTodo', '/saveEditedTask', '/deleteSelectedTask'
   ];
   return urls.includes(url);
@@ -93,7 +91,7 @@ const getHome = (req, res) => {
 }
 
 const getLogout = (req, res) => {
-  res.setHeader('Set-Cookie', `sessionid=0 ; Expires=Thu, 01 Jan 1970 00:00:01 GMT;`);
+  res.setHeader('Set-Cookie', `sessionid=0 ; Expires= ${new Date(1).toUTCString()}`);
   delete req.user.sessionid;
   res.redirect('/login');
   app.data[req.user.userName] = todoApp.getAllTodos(req.user.userName);
@@ -119,20 +117,20 @@ const postToAddTodo = (req, res) => {
 
 const postToAddTask = (req, res) => {
   let userName = req.user.userName;
-  let todoSrNo = req.body.todoSrNo;
+  let todoID = req.body.todoID;
   let taskTitle = req.body.taskTitle;
-  todoApp.addTask(userName, todoSrNo, taskTitle);
-  let tasks = todoApp.getAllTasks(userName, todoSrNo);
+  todoApp.addTask(userName, todoID, taskTitle);
+  let tasks = todoApp.getAllTasks(userName, todoID);
   res.write(lib.toS(tasks));
   res.end();
   app.data[userName] = todoApp.getAllTodos(userName);
   lib.writeDataToFile(app.fs, app.path, app.data);
 }
 
-const getTodoSrNo = (req, res) => {
+const gettodoID = (req, res) => {
   let userName = req.user.userName;
-  let todoSrNo = todoApp.getTodoSrNo(userName);
-  res.write(lib.toS(todoSrNo));
+  let todoID = todoApp.gettodoID(userName);
+  res.write(lib.toS(todoID));
   res.end();
 }
 
@@ -145,16 +143,17 @@ const viewTodoLists = (req, res) => {
 
 const viewSelectedTodo = (req, res) => {
   let userName = req.user.userName;
-  let todoSrNo = req.body.todoSrNo;
-  let currentTodo = todoApp.getTodo(userName, todoSrNo);
+  let todoID = req.body.todoID;
+  let currentTodo = todoApp.getTodo(userName, todoID);
   res.write(lib.toS(currentTodo));
   res.end();
 }
 
 const deleteSelectedTodo = (req, res) => {
   let userName = req.user.userName;
-  let todoSrNo = req.body.todoSrNo;
-  todoApp.deleteTodo(userName, todoSrNo);
+  let todoID = req.body.todoID;
+  todoApp.deleteTodo(userName, todoID);
+  todoApp.settodoIDs(userName);
   let allTodoLists = todoApp.getAllTodos(userName);
   res.write(lib.toS(allTodoLists));
   res.end();
@@ -164,12 +163,12 @@ const deleteSelectedTodo = (req, res) => {
 
 const saveEditedTask = (req, res) => {
   let userName = req.user.userName;
-  let todoSrNo = req.body.todoSrNo;
-  let taskSrNo = req.body.taskSrNo;
+  let todoID = req.body.todoID;
+  let taskID = req.body.taskID;
   let taskTitle = req.body.taskTitle;
   let taskStatus = req.body.taskStatus;
-  todoApp.editTask(userName, todoSrNo, taskSrNo, taskTitle, taskStatus);
-  let editedTask = todoApp.getTask(userName, todoSrNo, taskSrNo);
+  todoApp.editTask(userName, todoID, taskID, taskTitle, taskStatus);
+  let editedTask = todoApp.getTask(userName, todoID, taskID);
   res.write(lib.toS(editedTask));
   res.end();
   app.data[userName] = todoApp.getAllTodos(userName);
@@ -178,10 +177,10 @@ const saveEditedTask = (req, res) => {
 
 const deleteSelectedTask = (req, res) => {
   let userName = req.user.userName;
-  let todoSrNo = req.body.todoSrNo;
-  let taskSrNo = req.body.taskSrNo;
-  todoApp.deleteTask(userName, todoSrNo, taskSrNo);
-  let allTasks = todoApp.getAllTasks(userName, todoSrNo);
+  let todoID = req.body.todoID;
+  let taskID = req.body.taskID;
+  todoApp.deleteTask(userName, todoID, taskID);
+  let allTasks = todoApp.getAllTasks(userName, todoID);
   res.write(lib.toS(allTasks));
   res.end();
   app.data[userName] = todoApp.getAllTodos(userName);
@@ -190,11 +189,11 @@ const deleteSelectedTask = (req, res) => {
 
 const editTitleDesc = (req, res) => {
   let userName = req.user.userName;
-  let todoSrNo = req.body.todoSrNo;
+  let todoID = req.body.todoID;
   let todoTitle = req.body.todoTitle;
   let todoDesc = req.body.todoDesc;
-  todoApp.editTodoTitle(userName, todoSrNo, todoTitle);
-  todoApp.editTodoDescription(userName, todoSrNo, todoDesc);
+  todoApp.editTodoTitle(userName, todoID, todoTitle);
+  todoApp.editTodoDescription(userName, todoID, todoDesc);
   let allTodoLists = todoApp.getAllTodos(userName);
   res.write(lib.toS(allTodoLists));
   res.end();
@@ -215,7 +214,7 @@ app.get('/createTodo', getTodoFiles);
 app.get('/viewTodo', getTodoFiles);
 app.get('/editTodo', getTodoFiles);
 app.get('/deleteTodo', getTodoFiles);
-app.get('/getTodoSrNo', getTodoSrNo);
+app.get('/gettodoID', gettodoID);
 app.post('/login', postToHome);
 app.post('/addTodo', postToAddTodo);
 app.post('/addTask', postToAddTask);

@@ -2,62 +2,73 @@ const Todo = require('./todo.js');
 
 class User {
   constructor(userName) {
-    this.todoSrNo = 1;
+    this.todoID = 1;
     this.userName = userName;
     this.todos = {};
   }
 
-  getTodo(todoSrNo) {
-    return this.todos[todoSrNo];
+  getTodo(todoID) {
+    return this.todos[todoID];
   }
-  getTodoTitle(todoSrNo) {
-    return this.todos[todoSrNo].title;
+  getTodoTitle(todoID) {
+    return this.todos[todoID].title;
   }
-  editTodoTitle(todoSrNo, newTitle) {
-    return this.getTodo(todoSrNo).editTitle(newTitle);
+  editTodoTitle(todoID, newTitle) {
+    return this.getTodo(todoID).editTitle(newTitle);
   }
-  getTodoDescription(todoSrNo) {
-    return this.todos[todoSrNo].description;
+  getTodoDescription(todoID) {
+    return this.todos[todoID].description;
   }
-  editTodoDescription(todoSrNo, newDescription) {
-    return this.getTodo(todoSrNo).editDescription(newDescription);
+  editTodoDescription(todoID, newDescription) {
+    return this.getTodo(todoID).editDescription(newDescription);
   }
   addTodo(title, description) {
-    this.todos[this.todoSrNo] = new Todo(title, description);
+    this.todos[this.todoID] = new Todo(title, description);
     this.increaseSrNo();
   }
-  deleteTodo(todoSrNo) {
-    delete this.todos[todoSrNo];
+  deleteTodo(todoID) {
+    delete this.todos[todoID];
   }
-  getTask(todoSrNo, taskSrNo) {
-    return this.getTodo(todoSrNo).getTask(taskSrNo);
+  getTask(todoID, taskID) {
+    return this.getTodo(todoID).getTask(taskID);
   }
-  editTask(todoSrNo, taskSrNo, newTask) {
-    return this.getTodo(todoSrNo).editTask(taskSrNo, newTask);
+  editTask(todoID, taskID, newTask) {
+    return this.getTodo(todoID).editTask(taskID, newTask);
   }
-  addTask(todoSrNo, task, status) {
-    return this.getTodo(todoSrNo).addTask(task, status);
+  addTask(todoID, task, status) {
+    return this.getTodo(todoID).addTask(task, status);
   }
-  deleteTask(todoSrNo, taskSrNo) {
-    this.getTodo(todoSrNo).deleteTask(taskSrNo);
+  deleteTask(todoID, taskID) {
+    this.getTodo(todoID).deleteTask(taskID);
   }
-  getTaskStatus(todoSrNo, taskSrNo) {
-    return this.getTodo(todoSrNo).getTaskStatus(taskSrNo);
+  getTaskStatus(todoID, taskID) {
+    return this.getTodo(todoID).getTaskStatus(taskID);
   }
-  setTaskStatus(todoSrNo, taskSrNo, status) {
-    return this.getTodo(todoSrNo).setTaskStatus(taskSrNo, status);
+  setTaskStatus(todoID, taskID, status) {
+    return this.getTodo(todoID).setTaskStatus(taskID, status);
   }
-  getTodoSrNo() {
-    return this.todoSrNo;
+  gettodoID() {
+    return this.todoID;
+  }
+  settodoIDs(){
+    let todos=this.todos;
+    let todoIDs = Object.keys(todos);
+    let id = 1;
+    todoIDs.forEach(function(todoID){
+      todos[id] = todos[todoID];
+      id++;
+    });
+    delete todos[id];
+    this.todos=todos;
   }
   getAllTodos() {
     return this.todos;
   }
-  getAllTasks(todoSrNo) {
-    return this.getTodo(todoSrNo).tasks;
+  getAllTasks(todoID) {
+    return this.getTodo(todoID).tasks;
   }
   increaseSrNo() {
-    this.todoSrNo++;
+    this.todoID++;
   }
 }
 

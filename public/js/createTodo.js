@@ -22,11 +22,11 @@ const enableOtherFields = function () {
 
 const addTask = function () {
   let taskTitle = encodeURIComponent(document.getElementById('addTaskInput').value);
-  let todoSrNo = document.getElementById('todoSrNo').value;
+  let todoID = document.getElementById('todoID').value;
   let xmlReq = new XMLHttpRequest;
   xmlReq.open('POST', '/addTask');
   xmlReq.addEventListener('load', updateTaskList);
-  xmlReq.send(`todoSrNo=${todoSrNo}&taskTitle=${taskTitle}`);
+  xmlReq.send(`todoID=${todoID}&taskTitle=${taskTitle}`);
 }
 
 const updateTaskList = function () {
@@ -41,15 +41,15 @@ const updateTaskList = function () {
   document.getElementById("displayTasks").innerHTML = textToShow;
 }
 
-const getTodoSrNo = function () {
+const gettodoID = function () {
   let xmlReq = new XMLHttpRequest();
-  xmlReq.addEventListener('load', displayTodoSrNo);
-  xmlReq.open('GET', '/getTodoSrNo');
+  xmlReq.addEventListener('load', displaytodoID);
+  xmlReq.open('GET', '/gettodoID');
   xmlReq.send();
 }
 
-const displayTodoSrNo = function () {
-  document.getElementById('todoSrNo').value = +this.responseText;
+const displaytodoID = function () {
+  document.getElementById('todoID').value = +this.responseText;
 }
 
-window.onload = getTodoSrNo;
+window.onload = gettodoID;

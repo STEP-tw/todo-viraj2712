@@ -22,7 +22,7 @@ const viewSelectedTodo = function (id) {
   let xmlReq = new XMLHttpRequest();
   xmlReq.addEventListener('load', viewCurrentTodo);
   xmlReq.open('POST', '/viewSelectedTodo');
-  xmlReq.send(`todoSrNo=${id}`);
+  xmlReq.send(`todoID=${id}`);
 }
 
 const viewCurrentTodo = function () {
@@ -44,7 +44,7 @@ const viewCurrentTodo = function () {
 const deleteSelectedTodo = function () {
   let xmlReq = new XMLHttpRequest();
   xmlReq.open('POST', '/deleteSelectedTodo');
-  xmlReq.send(`todoSrNo=${currentTodoID}`);
+  xmlReq.send(`todoID=${currentTodoID}`);
   location.reload();
 }
 

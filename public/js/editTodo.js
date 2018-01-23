@@ -21,8 +21,8 @@ const viewSelectedTodo = function(id) {
   let xmlReq = new XMLHttpRequest();
   xmlReq.addEventListener('load', viewCurrentTodo);
   xmlReq.open('POST', '/viewSelectedTodo');
-  xmlReq.send(`todoSrNo=${id}`);
-  document.getElementById('todoSrNo').value = id;
+  xmlReq.send(`todoID=${id}`);
+  document.getElementById('todoID').value = id;
 }
 
 const viewCurrentTodo = function() {
@@ -49,13 +49,13 @@ const viewCurrentTodo = function() {
 
 const saveEditedTask = function(id) {
   titleID = id.slice(-1);
-  let todoSrNo = document.getElementById('todoSrNo').value;
+  let todoID = document.getElementById('todoID').value;
   let taskTitle = encodeURIComponent(document.getElementById(titleID).value);
   let taskStatus = document.getElementById(`status${titleID}`).checked;
   let xmlReq = new XMLHttpRequest();
   xmlReq.addEventListener('load', showEditedTask);;
   xmlReq.open('POST', '/saveEditedTask');
-  xmlReq.send(`todoSrNo=${todoSrNo}&taskSrNo=${titleID}&taskTitle=${taskTitle}&taskStatus=${taskStatus}`);
+  xmlReq.send(`todoID=${todoID}&taskID=${titleID}&taskTitle=${taskTitle}&taskStatus=${taskStatus}`);
 }
 
 const showEditedTask = function() {
@@ -66,11 +66,11 @@ const showEditedTask = function() {
 
 const deleteTask = function(id) {
   titleID = id.slice(-1);
-  let todoSrNo = document.getElementById('todoSrNo').value;
+  let todoID = document.getElementById('todoID').value;
   let xmlReq = new XMLHttpRequest();
   xmlReq.addEventListener('load', deleteSelectedTask);
   xmlReq.open('POST', '/deleteSelectedTask');
-  xmlReq.send(`todoSrNo=${todoSrNo}&taskSrNo=${titleID}`);
+  xmlReq.send(`todoID=${todoID}&taskID=${titleID}`);
 }
 
 const deleteSelectedTask = function() {
@@ -89,11 +89,11 @@ const deleteSelectedTask = function() {
 
 const addTaskInEdit = function() {
   let taskTitle = encodeURIComponent(document.getElementById('addTaskInputInEdit').value);
-  let todoSrNo = document.getElementById('todoSrNo').value;
+  let todoID = document.getElementById('todoID').value;
   let xmlReq = new XMLHttpRequest;
   xmlReq.open('POST', '/addTask');
   xmlReq.addEventListener('load', updateTaskList);
-  xmlReq.send(`todoSrNo=${todoSrNo}&taskTitle=${taskTitle}`);
+  xmlReq.send(`todoID=${todoID}&taskTitle=${taskTitle}`);
 }
 
 const updateTaskList = function() {
@@ -113,10 +113,10 @@ const updateTaskList = function() {
 const editTodo = function(){
   let todoTitle = encodeURIComponent(document.getElementById('todoTitleInput').value);
   let todoDesc = encodeURIComponent(document.getElementById('todoDescInput').value);
-  let todoSrNo = document.getElementById('todoSrNo').value;
+  let todoID = document.getElementById('todoID').value;
   let xmlReq = new XMLHttpRequest;
   xmlReq.open('POST', '/editTitleDesc');
-  xmlReq.send(`todoSrNo=${todoSrNo}&todoTitle=${todoTitle}&todoDesc=${todoDesc}`);
+  xmlReq.send(`todoID=${todoID}&todoTitle=${todoTitle}&todoDesc=${todoDesc}`);
   location.href = '/home';
 }
 

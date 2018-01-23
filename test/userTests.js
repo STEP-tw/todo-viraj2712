@@ -17,7 +17,7 @@ describe('User', () => {
       let expected = {
         title: 'pg',
         description: 'eat',
-        taskSrNo: 2,
+        taskID: 2,
         tasks: {
           1: {
             status: false,
@@ -29,9 +29,9 @@ describe('User', () => {
     })
   })
 
-  describe('#getTodoSrNo()', ()=>{
-    it('should return the todoSrNo of the specific todo of given user', () => {
-      let actual = user.getTodoSrNo();
+  describe('#gettodoID()', () => {
+    it('should return the todoID of the specific todo of given user', () => {
+      let actual = user.gettodoID();
       let expected = 2;
       assert.equal(actual, expected);
     })
@@ -92,7 +92,7 @@ describe('User', () => {
         2: {
           title: 'office',
           description: 'sleep',
-          taskSrNo: 1,
+          taskID: 1,
           tasks: {}
         }
       };
@@ -170,6 +170,25 @@ describe('User', () => {
     })
   })
 
+  describe('#settodoIDs()', () => {
+    it('should rearrange todo IDs of given user', () => {
+      user.addTodo('office', 'sleep');
+      user.deleteTodo(1);
+      user.settodoIDs();
+      let actual = user.getAllTodos();
+      console.log(actual);
+      let expected = {
+        1: {
+          title: 'office',
+          description: 'sleep',
+          taskID: 1,
+          tasks: {}
+        }
+      };
+      assert.deepEqual(actual, expected);
+    })
+  })
+
   describe('#getAllTodos()', () => {
     it('should return the all todos from given user', () => {
       let actual = user.getAllTodos();
@@ -177,7 +196,7 @@ describe('User', () => {
         1: {
           title: 'pg',
           description: 'eat',
-          taskSrNo: 2,
+          taskID: 2,
           tasks: {
             1: {
               status: false,
@@ -192,14 +211,14 @@ describe('User', () => {
 
   describe('#getAllTasks()', () => {
     it('should return the all tasks from given user', () => {
-      user.addTask(1,'to sleep');
+      user.addTask(1, 'to sleep');
       let actual = user.getAllTasks(1);
       let expected = {
         1: {
           title: 'to eat',
           status: false
         },
-        2:{
+        2: {
           title: 'to sleep',
           status: false
         }

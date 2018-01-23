@@ -11,55 +11,58 @@ class App {
   addUser(userName) {
     this.users[userName] = new User(userName);
   }
-  getTodo(userName, todoSrNo) {
-    return this.getUser(userName).getTodo(todoSrNo);
+  getTodo(userName, todoID) {
+    return this.getUser(userName).getTodo(todoID);
   }
-  getTodoTitle(userName, todoSrNo) {
-    return this.getUser(userName).getTodoTitle(todoSrNo);
+  getTodoTitle(userName, todoID) {
+    return this.getUser(userName).getTodoTitle(todoID);
   }
-  editTodoTitle(userName, todoSrNo, newTitle) {
-    return this.getUser(userName).editTodoTitle(todoSrNo, newTitle);
+  editTodoTitle(userName, todoID, newTitle) {
+    return this.getUser(userName).editTodoTitle(todoID, newTitle);
   }
-  getTodoDescription(userName, todoSrNo) {
-    return this.getUser(userName).getTodoDescription(todoSrNo);
+  getTodoDescription(userName, todoID) {
+    return this.getUser(userName).getTodoDescription(todoID);
   }
-  editTodoDescription(userName, todoSrNo, newDescription) {
+  editTodoDescription(userName, todoID, newDescription) {
     let todo = this.getUser(userName);
-    return todo.editTodoDescription(todoSrNo, newDescription);
+    return todo.editTodoDescription(todoID, newDescription);
   }
   addTodo(userName, title, description) {
     this.getUser(userName).addTodo(title, description);
   }
-  deleteTodo(userName, todoSrNo) {
-    this.getUser(userName).deleteTodo(todoSrNo);
+  deleteTodo(userName, todoID) {
+    this.getUser(userName).deleteTodo(todoID);
   }
-  getTask(userName, todoSrNo, taskSrNo) {
-    return this.getUser(userName).getTask(todoSrNo, taskSrNo);
+  getTask(userName, todoID, taskID) {
+    return this.getUser(userName).getTask(todoID, taskID);
   }
-  editTask(userName, todoSrNo, taskSrNo, newTask, status) {
-    this.setTaskStatus(userName, todoSrNo, taskSrNo, status);
-    return this.getUser(userName).editTask(todoSrNo, taskSrNo, newTask);
+  editTask(userName, todoID, taskID, newTask, status) {
+    this.setTaskStatus(userName, todoID, taskID, status);
+    return this.getUser(userName).editTask(todoID, taskID, newTask);
   }
-  addTask(userName, todoSrNo, taskTitle, taskStatus) {
-    return this.getUser(userName).addTask(todoSrNo, taskTitle, taskStatus);
+  addTask(userName, todoID, taskTitle, taskStatus) {
+    return this.getUser(userName).addTask(todoID, taskTitle, taskStatus);
   }
-  deleteTask(userName, todoSrNo, taskSrNo) {
-    this.getUser(userName).deleteTask(todoSrNo, taskSrNo);
+  deleteTask(userName, todoID, taskID) {
+    this.getUser(userName).deleteTask(todoID, taskID);
   }
-  getTaskStatus(userName, todoSrNo, taskSrNo) {
-    return this.getUser(userName).getTaskStatus(todoSrNo, taskSrNo);
+  getTaskStatus(userName, todoID, taskID) {
+    return this.getUser(userName).getTaskStatus(todoID, taskID);
   }
-  setTaskStatus(userName, todoSrNo, taskSrNo, status) {
-    return this.getUser(userName).setTaskStatus(todoSrNo, taskSrNo, status);
+  setTaskStatus(userName, todoID, taskID, status) {
+    return this.getUser(userName).setTaskStatus(todoID, taskID, status);
   }
-  getTodoSrNo(userName) {
-    return this.getUser(userName).getTodoSrNo();
+  gettodoID(userName) {
+    return this.getUser(userName).gettodoID();
+  }
+  settodoIDs(userName){
+    this.getUser(userName).settodoIDs();
   }
   getAllTodos(userName) {
     return this.getUser(userName).getAllTodos();
   }
-  getAllTasks(userName, todoSrNo) {
-    return this.getUser(userName).getAllTasks(todoSrNo);
+  getAllTasks(userName, todoID) {
+    return this.getUser(userName).getAllTasks(todoID);
   }
   retrive(newUser, appData) {
     let self = this;

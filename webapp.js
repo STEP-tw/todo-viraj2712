@@ -44,7 +44,7 @@ const use = function(handler) {
   this._preprocess.push(handler);
 };
 
-const addPostProcessor = function (handler) {
+const addPostProcessor = function(handler) {
   this._postprocessor.push(handler);
 };
 
@@ -55,7 +55,7 @@ let urlIsOneOf = function(urls) {
 const main = function(req, res) {
   res.redirect = redirect.bind(res);
   req.urlIsOneOf = urlIsOneOf.bind(req);
-  req.cookies = parseCookies(req.headers.cookie||'');
+  req.cookies = parseCookies(req.headers.cookie || '');
   let content = "";
   req.on('data', data => content += data.toString());
   req.on('end', () => {

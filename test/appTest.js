@@ -1,10 +1,20 @@
 let chai = require('chai');
 let assert = chai.assert;
+let qs = require('querystring');
 let request = require('./requestSimulator.js');
 let app = require('../app.js');
 let th = require('./testHelper.js');
+let MockFs = require('../src/mockFs');
 
 describe('app', () => {
+
+  beforeEach(() => {
+    app.fs = new MockFs();
+    app.data = {};
+    app.path = './testData/data.json';
+    app.registered_users = [{userName:'viraj',name:'Viraj Patil'},{userName:'salman',name:'Salman Shaik'}];
+  })
+
   describe('GET /bad', () => {
     it('responds with 404', done => {
       request(app, {
@@ -33,7 +43,6 @@ describe('app', () => {
         method: 'GET',
         url: '/login'
       }, (res) => {
-        th.status_is_ok(res);
         th.body_contains(res, 'TODO APP');
         done();
       })
@@ -121,7 +130,9 @@ describe('app', () => {
       request(app, {
         method: 'POST',
         url: '/home',
-        body: 'name=viraj'
+        body: qs.stringify({
+          body: 'viraj'
+        })
       }, (res) => {
         th.should_be_redirected_to(res, '/login');
         th.should_not_have_cookie(res, 'logInFailed');
@@ -152,7 +163,7 @@ describe('app', () => {
           }
         },
         (res) => {
-          th.should_be_redirected_to(res,'/login');
+          th.should_be_redirected_to(res, '/login');
           th.should_not_have_cookie(res, 'logInFailed');
           done();
         })
@@ -163,12 +174,12 @@ describe('app', () => {
       request(app, {
         method: 'POST',
         url: '/addTask',
-        body: 'todoSrNo=1&taskTitle=sleep',
+        body: 'todoID=1&taskTitle=sleep',
         headers: {
           cookie: 'sessionid=1234'
         }
       }, (res) => {
-        th.should_be_redirected_to(res,'/login');
+        th.should_be_redirected_to(res, '/login');
         th.should_not_have_cookie(res, 'logInFailed');
         done();
       })
