@@ -49,8 +49,8 @@ const viewCurrentTodo = function() {
 
 const saveEditedTask = function(id) {
   titleID = id.slice(-1);
-  let todoSrNo = +(document.getElementById('todoSrNo').value);
-  let taskTitle = document.getElementById(titleID).value;
+  let todoSrNo = document.getElementById('todoSrNo').value;
+  let taskTitle = encodeURIComponent(document.getElementById(titleID).value);
   let taskStatus = document.getElementById(`status${titleID}`).checked;
   let xmlReq = new XMLHttpRequest();
   xmlReq.addEventListener('load', showEditedTask);;
