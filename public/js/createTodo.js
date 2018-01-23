@@ -1,6 +1,6 @@
 const addTodo = function () {
-  let todoTitle = document.getElementById('todoTitle').value;
-  let todoDescription = document.getElementById('todoDescription').value;
+  let todoTitle = encodeURIComponent(document.getElementById('todoTitle').value);
+  let todoDescription = encodeURIComponent(document.getElementById('todoDescription').value);
   let xmlReq = new XMLHttpRequest;
   xmlReq.open('POST', '/addTodo');
   xmlReq.send(`todoTitle=${todoTitle}&todoDescription=${todoDescription}`);
@@ -21,7 +21,7 @@ const enableOtherFields = function () {
 }
 
 const addTask = function () {
-  let taskTitle = document.getElementById('addTaskInput').value;
+  let taskTitle = encodeURIComponent(document.getElementById('addTaskInput').value);
   let todoSrNo = document.getElementById('todoSrNo').value;
   let xmlReq = new XMLHttpRequest;
   xmlReq.open('POST', '/addTask');

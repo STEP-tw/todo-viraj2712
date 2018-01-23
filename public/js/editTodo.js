@@ -88,7 +88,7 @@ const deleteSelectedTask = function() {
 }
 
 const addTaskInEdit = function() {
-  let taskTitle = document.getElementById('addTaskInputInEdit').value;
+  let taskTitle = encodeURIComponent(document.getElementById('addTaskInputInEdit').value);
   let todoSrNo = document.getElementById('todoSrNo').value;
   let xmlReq = new XMLHttpRequest;
   xmlReq.open('POST', '/addTask');
