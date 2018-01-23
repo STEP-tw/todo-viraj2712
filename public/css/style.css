@@ -138,12 +138,18 @@ textarea{
   border: 1px solid darkGray;
   font-family: sans-serif;
 }
+
 label{
   font-family: sans-serif;
 }
+
 .mainForm{
   text-align: center;
   padding:0px;
   margin-top: 2%;
   margin-left:10%;
+}
+
+.greet {
+  font-size: 20px;
 }

@@ -7,9 +7,11 @@ const data = JSON.parse(fs.readFileSync('./data/data.json', 'utf8'));
 const todoApp = new Todo();
 
 let registered_users = [{
-  userName: 'viraj'
+  userName: 'viraj',
+  name:'Viraj Patil'
 }, {
-  userName: 'salman'
+  userName: 'salman',
+  name:'Salman Shaik'
 }];
 
 let logRequest = (req, res) => {
@@ -77,12 +79,14 @@ const postToHome = (req, res) => {
     setForLogin(user, res);
   } else setForFailedLogin(res);
 }
+
 const isValidUrl=(url)=>{
   let urls=['/','/home','/logout','/index','/createTodo','/viewTodo','/editTodo','/deleteTodo',
   '/getTodoSrNo','/addTodo','/addTask','/viewTodoLists','/viewSelectedTodo','/deleteSelectedTodo',
   '/saveTodo','/saveEditedTask','/deleteSelectedTask'];
   return urls.includes(url);
 }
+
 const redirect_user_to_login_if_not_loggedIn = (req, res) => {
   if (!req.user && isValidUrl(req.url)) res.redirect('/login');
 }
@@ -92,7 +96,9 @@ const redirect_user_to_home_if_loggedIn = (req, res) => {
 }
 
 const getHome = (req, res) => {
-  res.write(lib.getFileContent(fs, `./public/index.html`));
+  let fileContent=lib.getFileContent(fs, `./public/index.html`);
+  fileContent=fileContent.replace('GREET',`Welcome ${req.user.name}`);
+  res.write(fileContent);
   res.end();
 }
 
