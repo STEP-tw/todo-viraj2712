@@ -192,6 +192,18 @@ const deleteSelectedTask = (req, res) => {
   lib.writeDataToFile(fs,path,data);
 }
 
+const editTitleDesc = (req,res) => {
+  let userName = req.user.userName;
+  let todoSrNo = req.body.todoSrNo;
+  let todoTitle = req.body.todoTitle;
+  let todoDesc = req.body.todoDesc;
+  todoApp.editTodoTitle(userName,todoSrNo,todoTitle);
+  todoApp.editTodoDescription(userName,todoSrNo,todoDesc);
+  let allTodoLists = todoApp.getAllTodos(userName);
+  res.write(lib.toS(allTodoLists));
+  res.end();
+}
+
 let app = WebApp.create();
 app.use(logRequest);
 app.use(loadUser);
@@ -216,6 +228,7 @@ app.post('/deleteSelectedTodo', deleteSelectedTodo);
 app.post('/saveTodo', getTodoFiles);
 app.post('/saveEditedTask', saveEditedTask);
 app.post('/deleteSelectedTask', deleteSelectedTask);
+app.post('/editTitleDesc',editTitleDesc);
 app.addPostProcessor(serveStaticFiles);
 app.addPostProcessor(fileNotFound);
 module.exports = app;

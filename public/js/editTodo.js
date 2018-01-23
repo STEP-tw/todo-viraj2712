@@ -38,8 +38,8 @@ const viewCurrentTodo = function() {
     return accumulate += `${status}<input id='${taskIDs[i]}' type='text' value='${taskTitle}'> <button id='edit${taskIDs[i]}' onclick='saveEditedTask(this.id)'>Save</button> <button id='delete${taskIDs[i]}' onclick='deleteTask(this.id)'>Delete</button><br/>`;
   }, ``);
   document.getElementById('todoTitles').innerHTML = '';
-  document.getElementById('todoTitleHeader').innerHTML = `Title : <input type='text' value='${todo.title}'>`;
-  document.getElementById('todoDescHeader').innerHTML = `Description : <input type='text' value='${todo.description}'>`;
+  document.getElementById('todoTitleHeader').innerHTML = `Title : <input type='text' id='todoTitleInput' value='${todo.title}'>`;
+  document.getElementById('todoDescHeader').innerHTML = `Description : <textArea id='todoDescInput'>${todo.description}</textArea>`;
   document.getElementById('tasks').innerHTML = `Tasks :`;
   document.getElementById('viewTasks').innerHTML = generatedTasks;
   document.getElementById('saveTodoButtonInEdit').style.visibility = 'visible';
@@ -108,6 +108,16 @@ const updateTaskList = function() {
     return accumulate += `${status}<input id='${taskIDs[i]}' type='text' value='${taskTitle}'> <button id='edit${taskIDs[i]}' onclick='saveEditedTask(this.id)'>Save</button> <button id='delete${taskIDs[i]}' onclick='deleteTask(this.id)'>Delete</button><br/>`;
   }, ``);
   document.getElementById('viewTasks').innerHTML = generatedTasks;
+}
+
+const editTodo = function(){
+  let todoTitle = encodeURIComponent(document.getElementById('todoTitleInput').value);
+  let todoDesc = encodeURIComponent(document.getElementById('todoDescInput').value);
+  let todoSrNo = document.getElementById('todoSrNo').value;
+  let xmlReq = new XMLHttpRequest;
+  xmlReq.open('POST', '/editTitleDesc');
+  xmlReq.send(`todoSrNo=${todoSrNo}&todoTitle=${todoTitle}&todoDesc=${todoDesc}`);
+  location.href = '/home';
 }
 
 window.onload = viewTodoLists;
