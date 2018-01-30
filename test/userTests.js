@@ -176,7 +176,6 @@ describe('User', () => {
       user.deleteTodo(1);
       user.setTodoIDs();
       let actual = user.getAllTodos();
-      console.log(actual);
       let expected = {
         1: {
           title: 'office',

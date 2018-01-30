@@ -5,11 +5,12 @@
   <title>Create Todo List</title>
   <link rel="stylesheet" href="css/style.css">
   <script type="text/javascript" src="./js/createTodo.js"></script>
+  <script type="text/javascript" src="./js/lib/frontEndUtility.js"></script>
   <label id="todoID"></label>
 </head>
 
 <body align=center>
-  <h1><a href="index"> << </a>Create Todo</h1>
+  <h1><a href="home"> << </a>Create Todo</h1>
   <hr>
   <div class="mainForm">
     <h3><a href="logout"  class="logout">Logout</a></h3>
@@ -22,7 +23,7 @@
       <div id="displayTasks"></div><br>
       <div class="addTasks">
         <br>
-        <input id="addTaskInput">
+        <input type=text id="addTaskInput">
         <button id="addTask" onclick="addTask()">Add Task</button>
         <br>
       </div>

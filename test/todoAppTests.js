@@ -221,7 +221,6 @@ describe('App', () => {
       app.deleteTodo('vp',1);
       app.setTodoIDs('vp');
       let actual = app.getAllTodos('vp');
-      console.log(actual);
       let expected = {
         1: {
           title: 'office',
