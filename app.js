@@ -18,7 +18,6 @@ let registered_users = [{
   name: 'Salman Shaik'
 }];
 
-
 let logRequest = (req, res, next) => {
   let text = [
     `${new Date().toLocaleTimeString()}`,
@@ -86,7 +85,7 @@ const postToHome = (req, res, next) => {
 
 const getHome = (req, res, next) => {
   let fileContent = lib.getFileContent(fs, `./public/home.html`);
-  fileContent = fileContent.replace('GREET', `Welcome ${req.user.name}`);
+  if(req.user) fileContent = fileContent.replace('GREET', `Welcome ${req.user.name}`);
   res.send(fileContent);
 }
 
@@ -102,7 +101,7 @@ const getLogout = (req, res) => {
 const getIndex = (req, res) => res.redirect('/home');
 
 const getTodoFiles = (req, res) => {
-  res.send(lib.getFileContent(fs, `./public${req.url}.html`));
+  if(!res.finished) res.send(lib.getFileContent(fs, `./public${req.url}.html`));
 }
 
 const postToAddTodo = (req, res) => {

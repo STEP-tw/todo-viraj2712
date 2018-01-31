@@ -5,8 +5,8 @@ const lib = require('../lib/utility.js');
 beforeEach(()=>{
   fs=new MockFs();
 })
-describe("Utility()",()=>{
-  describe("#toS",()=>{
+describe("Utility",()=>{
+  describe("#toS()",()=>{
     it("should convert a empty object into a JSON string",()=>{
       let actual=lib.toS({});
       let expected='{}';
